@@ -8363,11 +8363,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KK ENTERPRISES\\source\\repos\\HouseRepairApp\\HouseRepairApp.csproj",
+      "projectUniqueName": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\HouseRepairApp.csproj",
       "projectName": "HouseRepairApp",
-      "projectPath": "C:\\Users\\KK ENTERPRISES\\source\\repos\\HouseRepairApp\\HouseRepairApp.csproj",
+      "projectPath": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\HouseRepairApp.csproj",
       "packagesPath": "C:\\Users\\KK ENTERPRISES\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KK ENTERPRISES\\source\\repos\\HouseRepairApp\\obj\\",
+      "outputPath": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KK ENTERPRISES\\AppData\\Roaming\\NuGet\\NuGet.Config",

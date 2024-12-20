@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "HouseRepairApp": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:59162;http://localhost:59163"
+    }
+  }
+}
