@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HomeRepairApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HomeRepairApp.styles.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+        <div class=" bg-light borderbottm m-0 d-flex flex-wrap justify-content-between align-items-center py-2 bg-light">
+            <div class="d-flex flex-wrap align-items-center px-2">
+                <p class="mb-0 px-md-2">HomeRepair - Online Technician Calling</p>
+                <p class="mb-0 px-2">+92 42 111 333 465</p>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center px-2">
+                <div class="dropdown me-2 border-0">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                            type="button"
+                            id="languageDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        English
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <li><a class="dropdown-item" href="#">English</a></li>
+                        <li><a class="dropdown-item" href="#">Urdu</a></li>
+                    </ul>
+                </div>
+                <p class="mb-0">Punjab (PB)</p>
+            </div>
+        </div>
+        <nav class="bg-white navbar navbar-expand-lg navbar-light navbar-custom border-bottom m-0">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="#">
+                    <img style="height:35px;" src="~/images/logo.jpg" alt="HomeRepair">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index">HomePage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Prices">Prices</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/MarketPlace/Index">MarketPlace</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/NotFound">Contact Us</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/Home/Index#aboutus">About Us</a>
+                        </li>
+                    </ul>
+
+                    <form class="d-flex flex-wrap align-items-center">
+                        <a class="btn btn-green text-white border rounded-0" href="/ContactUs/Booking">Book Now!</a>
+                        <i class="fas fa-magnifying-glass px-2"></i>
+                        <input class="form-control search-bar me-2 border-0 rounded-0 w-auto" type="search" placeholder="Search" aria-label="Search">
+                        <a href="/MarketPlace/Cart" class="me-2 text-black"><i class="fas fa-cart-shopping"></i></a>
+                        <a class="me-2 text-black" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user"></i></a>
+                        <a href="/ContactUs/Booking" class="me-2 text-black"><i class="fas fa-phone"></i></a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <div class="container-fluid my-5 bg-light p-4">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-md-start text-center px-3">
+                <h2 class="fw-bolder">Stay in touch</h2>
+                <p>Subscribe to our mailing list to get the latest updates about our products & services!</p>
+            </div>
+            <div class="col-md-6">
+                <form>
+                    <div class="row g-2">
+                        <div class="col-md-8">
+                            <input type="email" class="form-control rounded-0" placeholder="Enter your email" required>
+                            <small class="text-muted">We care about your data in our privacy policy.</small>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn bg-blue text-white mx-5 rounded-0">Subscribe</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-white text-muted">
+        <div class="container pt-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <h6 class="fw-bold">My Account</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none text-muted">Sign in</a></li>
+                        <li><a class="text-decoration-none text-muted">Create account</a></li>
+                        <li><a class="text-decoration-none text-muted">Orders</a></li>
+                        <li><a class="text-decoration-none text-muted">Wish list</a></li>
+                        <li><a class="text-decoration-none text-muted">Contact us</a></li>
+                        <li><a class="text-decoration-none text-muted">Privacy Policy & Terms</a></li>
+                        <li><a class="text-decoration-none text-muted">Payment</a></li>
+                        <li><a class="text-decoration-none text-muted">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Click here to Check Prices</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none text-muted">For Residential Spaces</a></li>
+                        <li><a class="text-decoration-none text-muted">For Commercial Spaces</a></li>
+                        <li><a class="text-decoration-none text-muted">For Institutional Spaces</a></li>
+                        <li><a class="text-decoration-none text-muted">For Industrial Spaces</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Get Free Advisory</h6>
+                    <p class="mb-2">To have free advice from our professional team about your home requirements, click the link below.</p>
+                    <a class="text-decoration-none text-muted">HomeRepair Free Repair Advisory</a>
+                </div>
+
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Anas Industries (Pvt.) Ltd.</h6>
+                    <p class="mb-0">Contact Number:</p>
+                    <p class="mb-1 text-dark">+92 42 111 333 465</p>
+                    <p class="mb-0">Office Timing:</p>
+                    <p class="mb-1 text-dark">Mon-Sat 10am - 6pm</p>
+                    <p class="mb-0">For Sales Inquiries:</p>
+                    <p class="mb-1"><a class="text-decoration-none text-dark">sales@HomeRepair.com</a></p>
+                    <p class="mb-0">Office Location:</p>
+                    <a class="text-decoration-none text-dark">View on map</a>
+                    <div class="mt-3">
+                        <p class="text-dark">Get the app</p>
+                        <a class="pr"><img src="google-play-badge.png" alt="Google Play" width="100"></a>
+                        <a class="pr"><img src="app-store-badge.png" alt="App Store" width="100"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-4 text-muted border-top">
+            © 2024 Copyright:
+            <a class="text-reset fw-bold" href="#">HomeRepair.com</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('a.nav-link[href="#services"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const target = document.querySelector('#services');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('a.nav-link[href="#services"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const target = document.querySelector('#aboutus');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

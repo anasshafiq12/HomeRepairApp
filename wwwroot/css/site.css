@@ -1,0 +1,546 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+a.hover-effect:hover {
+    color: forestgreen !important;
+}
+
+.elecwiring {
+    background: linear-gradient(to right, #040d75, transparent), url(../images/elecwirng.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.elecplugs {
+    background: linear-gradient(to right, #083b01, #0f1af5), url(../images/elecplugs.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.electrician {
+    background: linear-gradient(to right, #040d75, transparent), url(../images/electrician3.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bgwhite:hover {
+    background: #040d75;
+}
+
+.text-blue {
+    color: #040d75;
+}
+
+.bg-blue {
+    background: #040d75;
+}
+
+.bg-transparentblue {
+    background: #040d75;
+    opacity: 0.7;
+}
+
+.bg-bluegreen {
+    background: linear-gradient(to right, #083b01, #2a09ba);
+}
+
+.shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.borderright {
+    border-right: 5px solid white;
+}
+
+.borderbottom {
+    border-bottom: 5px solid #28a745;
+}
+
+.servicesimg {
+    background: linear-gradient(to right, #040d75, transparent), url(../images/service.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+    .servicesimg p {
+        width: 40vw;
+        word-wrap: break-word;
+    }
+
+.card {
+    text-align: center;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.icon {
+    font-size: 2rem;
+    color: #28a745;
+    margin-bottom: 0.5rem;
+}
+
+.borderbottm {
+    border-bottom: 3px solid #808080;
+}
+
+/*prices page*/
+
+body {
+    background-color: #f7faff;
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: none;
+}
+
+.most-popular {
+    color: #6f42c1;
+}
+
+.card-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+    .card-price sub {
+        font-size: 0.8rem;
+        color: #777;
+    }
+
+.card-features {
+    list-style: none;
+    padding: 0;
+}
+
+.text-purple {
+    color: #a807e3;
+}
+
+.bg-purple {
+    background-color: #d98cf7;
+}
+
+.card-features li {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+    .card-features li i {
+        color: #0d6efd;
+        margin-right: 8px;
+    }
+
+.card-footer a {
+    color: #0d6efd;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.bg-lightblue {
+    background-color: #42c5f5;
+}
+
+.bg-lightgreen {
+    background-color: aquamarine;
+}
+
+
+/*booking page*/
+
+.hero-section {
+    background-image: url('../images/booking.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 0px 0;
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 50, 0.6);
+    padding: 50px;
+}
+
+.form-section {
+    background: rgba(0, 50, 100, 0.8);
+    padding: 30px;
+    color: white;
+    border-radius: 8px;
+}
+
+.btn-green {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+    .btn-green:hover {
+        background-color: #218838;
+    }
+
+/*page not found*/
+
+.notfound {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    background-image: url('../images/notfound.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.error-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .error-container h1 {
+        font-size: 4rem;
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .error-container p {
+        font-size: 1.2rem;
+        color: #6c757d;
+    }
+
+    .error-container a {
+        text-decoration: none;
+        font-size: 1rem;
+    }
+
+
+/*    cart page*/
+.cartbody {
+    background-color: #f9f9f9;
+}
+
+.cart-item {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.product-image {
+    max-width: 80px;
+    border-radius: 5px;
+}
+
+.total-price {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.coupon-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-total-btn {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+/* prices page*/
+.pricing-card {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .pricing-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 10px 20px rgba(25, 135, 84, 0.5)
+    }
+
+.highlighted {
+    border: 2px solid #28a745;
+}
+
+.pricing-card .btn {
+    border-radius: 50px;
+}
+/* Keyframes for the animations */
+
+/* Slide Left to Right */
+@keyframes PriceslideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Slide Top to Bottom */
+@keyframes PriceslideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Slide Right to Left */
+@keyframes PriceslideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Applying animations to specific columns */
+.container .row .col-md-4:nth-child(1) .pricing-card {
+    animation: PriceslideInFromLeft 1s ease-out forwards;
+}
+
+.container .row .col-md-4:nth-child(2) .pricing-card {
+    animation: PriceslideInFromTop 1s ease-out forwards;
+}
+
+.container .row .col-md-4:nth-child(3) .pricing-card {
+    animation: PriceslideInFromRight 1s ease-out forwards;
+}
+
+
+
+
+
+
+/*booking page*/
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%); /* Start completely off-screen to the left */
+    }
+
+    100% {
+        transform: translateX(0); /* End at original position */
+    }
+}
+
+/* Animation for Left Column */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+/* booking page*/
+/* Animation for Right Column */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.hero-section .col-md-6:first-child {
+    animation: slideInFromLeft 1s ease-out forwards;
+}
+
+.hero-section .col-md-6:last-child {
+    animation: slideInFromRight 1s ease-out forwards;
+}
+
+
+
+/*home page 4 cols content on photo animate*/
+
+@keyframes HomeslideInFromLeft {
+    0% {
+        transform: translateX(-100%); /* Start completely off-screen to the left */
+    }
+
+    100% {
+        transform: translateX(0); /* End at original position */
+    }
+}
+
+/* Animation for Left Column */
+@keyframes HomeslideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+/* booking page*/
+/* Animation for Right Column */
+@keyframes HomeslideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes HomeslideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes HomeslideInFromBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+.left {
+    animation: HomeslideInFromLeft 1s ease-out forwards;
+}
+
+.right {
+    animation: HomeslideInFromRight 1s ease-out forwards;
+}
+
+.top {
+    animation: HomeslideInFromTop 1s ease-out forwards;
+}
+
+.bottom {
+    animation: HomeslideInFromBottom 1s ease-out forwards;
+}
+
+
+
+/*home page  action section animation*/
+
+/* Fade-in Animation for Cards */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-in-out;
+}
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+/* Bouncing Animation for Icons */
+.bounce {
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Fade-in for Footer Text */
+.text-fade {
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+    .text-fade.visible {
+        opacity: 1;
+    }
