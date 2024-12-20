@@ -1,0 +1,73 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+
+<div class="container-fluid hero-section">
+    <div class="hero-overlay">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-white d-none d-md-inline-block">
+                    <h1 class="display-4">Expert Care for Every Pipe in Your Home</h1>
+                    <p class="lead">Efficient plumbing solutions delivered with seamless, professional service from start to finish.</p>
+                    <a href="#" class="btn btn-green btn-lg  rounded-0 ">Discover More</a>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-section rounded-0">
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="mb-3 d-flex flex-wrap gap-3">
+                                <div class="flex-grow-1">
+                                    <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" placeholder="Name" />
+                                    <label asp-for="Input.Name">Name</label>
+                                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <input asp-for="Input.Phone" class="form-control" aria-required="true" placeholder="111-222-333" />
+                                    <label asp-for="Input.Phone">Phone</label>
+                                    <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex flex-wrap gap-3">
+                                <div class="flex-grow-1">
+                                    <input asp-for="Input.Address" class="form-control"  aria-required="true" placeholder="Address" />
+                                    <label asp-for="Input.Address">Address</label>
+                                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                <label asp-for="Input.Email">Email</label>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 d-flex flex-wrap gap-3">
+                                
+                                <div class="flex-grow-1">
+                                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                    <label asp-for="Input.Password">Password</label>
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <button id="registerSubmit" type="submit" class="btn btn-green w-100 rounded-0">Register</button>
+                        </form>
+                        <p class="text-center mt-2">Already have an account? <a href="./Login">Login</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
