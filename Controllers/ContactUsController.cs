@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HouseRepairApp.Data;
+using HouseRepairApp.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HouseRepairApp.Controllers
 {
@@ -10,6 +12,15 @@ namespace HouseRepairApp.Controllers
 		}
 		public IActionResult Booking()
 		{
+			return View();
+		}
+		[HttpPost]
+		public IActionResult Booking(Booking booking)
+		{
+			using (var context = new ApplicationDbContext())
+			{
+
+			}
 			return View();
 		}
 	}
