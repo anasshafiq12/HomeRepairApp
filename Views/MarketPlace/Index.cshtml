@@ -1,4 +1,5 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@model List<CartItem>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Applainces</title>
 </head>
@@ -8,158 +9,23 @@
             <h3 class="text-center text-success fw-bold top">Applainces</h3>
             <h2 class="text-center fw-bold mb-4 text-blue top">Slightly used certified applainces you can trust.</h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/ac.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
+                @foreach (var item in Model)
+                {
+                    <div class="col">
+                        <div class="card pricing-card rounded-0">
+                            <img src=@Url.Content("~/"+ item.ImageUrl) class="card-img-top" alt="Master Texture Finish">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">@item.Name</h5>
+                                <p class="text-center card-features">@item.Description</p>
+                                <p class="card-price fw-bold">@item.Price</p>
+                                <form asp-action="" asp-controller="">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/oven.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/stove.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/led.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/stove.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card  pricing-card rounded-0">
-                        <img src="../images/oven.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/led.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/ac.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*                                 <input type="hidden" name="id" value="@item.ItemId" />
-                                *@                                <button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/led.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*                                 <input type="hidden" name="id" value="@item.ItemId" />
-                                *@                                <button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/stove.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/ac.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card pricing-card rounded-0">
-                        <img src="../images/oven.jpg" class="card-img-top" alt="Master Texture Finish">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Gree Air Conditioner</h5>
-                            <form asp-action="" asp-controller="">
-                                @*<input type="hidden" name="id" value="@item.ItemId" />
-                                *@<button type="submit" class="btn btn-green rounded-0">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
