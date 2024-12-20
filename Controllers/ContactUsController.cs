@@ -6,7 +6,12 @@ namespace HouseRepairApp.Controllers
 {
 	public class ContactUsController : Controller
 	{
-		public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+        public ContactUsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public IActionResult Index()
 		{
 			return View();
 		}
@@ -17,10 +22,8 @@ namespace HouseRepairApp.Controllers
 		[HttpPost]
 		public IActionResult Booking(Booking booking)
 		{
-			using (var context = new ApplicationDbContext())
-			{
-
-			}
+			_context.Bookings.Add(booking);
+			_context.SaveChanges();
 			return View();
 		}
 	}

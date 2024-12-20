@@ -10,5 +10,6 @@ namespace HouseRepairApp.Data
             : base(options)
         {
         }
+        public DbSet<Booking> Bookings { get; set; } // table
     }
 }
