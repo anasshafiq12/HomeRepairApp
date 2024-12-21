@@ -4,34 +4,34 @@
     <div class="container mt-5">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center">
-                <h2>Add Cart Item</h2>
+                <h2>Add Item</h2>
             </div>
             <div class="card-body">
-                <form action="/submitCartItem" method="POST" enctype="multipart/form-data">
+                <form asp-action="Index" asp-controller="Admin" method="post" enctype="multipart/form-data">
                     <!-- Item Name -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Item Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter item name" required>
+                        <input type="text" class="form-control" id="name" name="Name" placeholder="Enter item name" required>
                     </div>
                     <!-- Description -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter item description" required></textarea>
+                        <textarea class="form-control" id="description" name="Description" rows="3" placeholder="Enter item description" required></textarea>
                     </div>
                     <!-- Price -->
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" step="0.01" required>
+                        <input type="number" class="form-control" id="price" name="Price" placeholder="Enter price" step="0.01" required>
                     </div>
                     <!-- Quantity -->
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity" min="1" required>
+                        <input type="number" class="form-control" id="quantity" name="Quantity" placeholder="Enter quantity" min="1" required>
                     </div>
                     <!-- Item Photo -->
                     <div class="mb-3">
                         <label for="photo" class="form-label">Item Photo</label>
-                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
+                        <input type="file" class="form-control" id="photo" name="image" accept="image/*" required>
                     </div>
                     <!-- Submit Button -->
                     <div class="text-center">
