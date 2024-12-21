@@ -1,6 +1,7 @@
 ﻿using HouseRepairApp.Data;
 using HouseRepairApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HouseRepairApp.Controllers
 {
@@ -59,6 +60,14 @@ namespace HouseRepairApp.Controllers
 		{
 			List<Booking> bookings = _context.Bookings.ToList();
 			return View(bookings);
+		}
+		[HttpPost]
+		public IActionResult Delete(int id)
+		{
+            Booking booking = _context.Bookings.FirstOrDefault(z => z.Id == id); 
+			_context.Bookings.Remove(booking);
+            _context.SaveChanges();
+            return RedirectToAction("Bookings", "Admin");
 		}
 	}
 }
