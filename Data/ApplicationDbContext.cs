@@ -11,6 +11,6 @@ namespace HouseRepairApp.Data
         {
         }
         public DbSet<Booking> Bookings { get; set; } // table
-        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<CartItem> CartItems { get; set; } // table
     }
 }
