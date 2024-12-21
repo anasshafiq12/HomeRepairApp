@@ -2,47 +2,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        .booking-summary {
-            cursor: pointer;
-        }
-        .booking-details {
-            display: none;
-        }
-        .booking-card {
-            border-left: 5px solid #0d6efd;
-            transition: box-shadow 0.3s;
-        }
-        .booking-card:hover {
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Repair App - Bookings</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Booking List</h2>
-        <div class="list-group">
-            @foreach (var booking in Model)
-            {
-                <div class="booking-card p-3 mb-3 bg-light rounded">
-                    <div class="booking-summary d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#details1">
-                    <div>
-                        <h5 class="mb-0">@booking.Name</h5>
-                        <small class="text-muted">City: @booking.City</small>
-                    </div>
-                    <span class="text-primary">View Details</span>
+        <h1 class="text-center mb-4">Booking List</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>View Details</th>
+                </tr>
+            </thead>
+            <tbody id="bookingTable">
+                <!-- Sample Booking Rows -->
+                
+                @foreach (var booking in Model)
+                {
+                    <tr>
+                        <td>@booking.Name</td>
+                        <td>@booking.Phone</td>
+                        <td>@booking.City</td>
+                        <td>@booking.Date</td>
+                        <td>@booking.Time</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#bookingDetailsModal"
+                                    data-name="@booking.Name"
+                                    data-phone="@booking.Phone"
+                                    data-city="@booking.City"
+                                    data-address="@booking.Address"
+                                    data-date="@booking.Date"
+                                    data-time="@booking.Time"
+                                    data-subject="@booking.Subject"
+                                    data-message="@booking.Message">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Booking Details -->
+    <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-labelledby="bookingDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingDetailsModalLabel">Booking Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="details1" class="booking-details collapse mt-3">
-                    <p><strong>Phone:</strong> @booking.Phone</p>
-                    <p><strong>Address:</strong> @booking.Address</p>
-                    <p><strong>Date:</strong> @booking.Date</p>
-                    <p><strong>Time:</strong> @booking.Time</p>
-                    <p><strong>Subject:</strong> @booking.Subject</p>
-                    <p><strong>Message:</strong> @booking.Message .</p>
+                <div class="modal-body">
+                    <p><strong>ID:</strong> <span id="modalId"></span></p>
+                    <p><strong>Name:</strong> <span id="modalName"></span></p>
+                    <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+                    <p><strong>City:</strong> <span id="modalCity"></span></p>
+                    <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                    <p><strong>Time:</strong> <span id="modalTime"></span></p>
+                    <p><strong>Subject:</strong> <span id="modalSubject"></span></p>
+                    <p><strong>Message:</strong> <span id="modalMessage"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
-            }
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingTable = document.getElementById('bookingTable');
+            bookingTable.addEventListener('click', (event) => {
+                const button = event.target.closest('.view-details');
+                if (button) {
+                    document.getElementById('modalId').textContent = button.dataset.id;
+                    document.getElementById('modalName').textContent = button.dataset.name;
+                    document.getElementById('modalPhone').textContent = button.dataset.phone;
+                    document.getElementById('modalCity').textContent = button.dataset.city;
+                    document.getElementById('modalAddress').textContent = button.dataset.address;
+                    document.getElementById('modalDate').textContent = button.dataset.date;
+                    document.getElementById('modalTime').textContent = button.dataset.time;
+                    document.getElementById('modalSubject').textContent = button.dataset.subject;
+                    document.getElementById('modalMessage').textContent = button.dataset.message;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

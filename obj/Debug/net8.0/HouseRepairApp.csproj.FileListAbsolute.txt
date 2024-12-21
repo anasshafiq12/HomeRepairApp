@@ -586,3 +586,7 @@ C:\Users\KK ENTERPRISES\Documents\Project\obj\Debug\net8.0\refint\HouseRepairApp
 C:\Users\KK ENTERPRISES\Documents\Project\obj\Debug\net8.0\HouseRepairApp.pdb
 C:\Users\KK ENTERPRISES\Documents\Project\obj\Debug\net8.0\HouseRepairApp.genruntimeconfig.cache
 C:\Users\KK ENTERPRISES\Documents\Project\obj\Debug\net8.0\ref\HouseRepairApp.dll
+C:\Users\KK ENTERPRISES\Documents\Project\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\KK ENTERPRISES\Documents\Project\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\Users\KK ENTERPRISES\Documents\Project\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\KK ENTERPRISES\Documents\Project\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
