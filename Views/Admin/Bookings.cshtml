@@ -14,7 +14,7 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>View Details</th>
-                    <th>Delete</th>
+                    <th>Delete Booking</th>
                 </tr>
             </thead>
             <tbody id="bookingTable">
@@ -29,7 +29,7 @@
                         <td>@booking.Date</td>
                         <td>@booking.Time</td>
                         <td>
-                            <button class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#bookingDetailsModal"
+                            <button class="btn btn-primary view-details" data-bs-toggle="modal" data-bs-target="#bookingDetailsModal"
                                     data-name="@booking.Name"
                                     data-phone="@booking.Phone"
                                     data-city="@booking.City"
@@ -44,7 +44,7 @@
                         <td>
                             <form method="post" asp-action="Delete" asp-controller="Admin" onsubmit="return confirm('Are you sure you want to delete this booking?');">
                             <input type="hidden" name="id" value="@booking.Id" />
-                            <button type="submit" class="btn btn-danger">Delete Booking</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                         </td>
                     </tr>
@@ -53,7 +53,6 @@
         </table>
     </div>
 
-    <!-- Modal for Booking Details -->
     <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-labelledby="bookingDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
