@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Cr7OfrFbm6ZBscowvmmEoTXLNm4+/uoTUX2siTojRTg=",
+  "Hash": "QKF9AUUwwHgPE04RaCk5m7hDRb8RBhgmjT+VICL4TpY=",
   "Source": "HouseRepairApp",
   "BasePath": "_content/HouseRepairApp",
   "Mode": "Default",
@@ -2601,12 +2601,12 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\wwwroot\\uploads\\19e0871d-4fe8-482f-8201-5707e84ce484.jpg",
+      "Identity": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\wwwroot\\uploads\\80f8e6e6-c48a-41ba-a084-42d96d22c323.jpg",
       "SourceId": "HouseRepairApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\wwwroot\\",
       "BasePath": "_content/HouseRepairApp",
-      "RelativePath": "uploads/19e0871d-4fe8-482f-8201-5707e84ce484.jpg",
+      "RelativePath": "uploads/80f8e6e6-c48a-41ba-a084-42d96d22c323.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -2617,7 +2617,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\19e0871d-4fe8-482f-8201-5707e84ce484.jpg"
+      "OriginalItemSpec": "wwwroot\\uploads\\80f8e6e6-c48a-41ba-a084-42d96d22c323.jpg"
     }
   ]
 }

@@ -21,50 +21,57 @@ namespace HouseRepairApp.Controllers
 			HttpContext.Session.SetString("cartItems", json);
 			return View(items);
 		}
-		[HttpPost]
-		public IActionResult Index(string id)
-		{
+        [HttpPost]
+        public IActionResult Index(string id)
+        {
             if (!HttpContext.Session.Keys.Contains("ids"))
-			{
-				HttpContext.Session.SetString("ids", id);
-			}
-			else
-			{
-				string json = HttpContext.Session.GetString("ids");
-				List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
-				ids.Add(id);
-				string jsonId = JsonSerializer.Serialize(ids);
-				HttpContext.Session.SetString("ids", jsonId);
-			}
-			string jsonItems = HttpContext.Session.GetString("cartItems");
-			List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
-            return View(items);
-		}
-		public IActionResult Cart()
-		{
-			string json = HttpContext.Session.GetString("ids");
-			List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
-			List<CartItem> items = new List<CartItem>();
-			foreach(string id in ids)
-			{
-				CartItem item = _context.CartItems.Include(z => z.ItemId == int.Parse(id)).FirstOrDefault();
-				items.Add(item);
-			}
-			string jsonItems = JsonSerializer.Serialize(items);
-			HttpContext.Session.SetString("items", jsonItems);
-			Cart cart = new Cart { CartItems = items };
-			cart.SetTotalPrice();
-			return View(cart);
-		}
-		[HttpPost]
-		public IActionResult Cart(int id,int quantity)
-		{
-			string json = HttpContext.Session.GetString("items");
-			List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json);
-            Cart cart = new Cart { CartItems = items };
-			cart.SetItemPrice(id,quantity);
-            cart.SetTotalPrice();
+            {
+                List<string> ids = new List<string> { id };
+                string jsonIds = JsonSerializer.Serialize(ids);
+                HttpContext.Session.SetString("ids", jsonIds);
+            }
+            else
+            {
+                string json = HttpContext.Session.GetString("ids");
+                List<string> ids = JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>();
+                ids.Add(id);
+                string jsonIds = JsonSerializer.Serialize(ids);
+                HttpContext.Session.SetString("ids", jsonIds);
+            }
+
+            string jsonItems = HttpContext.Session.GetString("cartItems");
+            List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(jsonItems) ?? new List<CartItem>();
+
             return View(items);
         }
-	}
+        public IActionResult Cart()
+        {
+            string json = HttpContext.Session.GetString("ids");
+            if (string.IsNullOrEmpty(json))
+                return RedirectToAction("Index", "MarketPlace");
+            List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
+            List<CartItem> items = new List<CartItem>();
+            foreach (string id in ids)
+            {
+                CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
+                items.Add(item);
+            }
+            string jsonItems = JsonSerializer.Serialize(items);
+            HttpContext.Session.SetString("items", jsonItems);
+            Cart cart = new Cart { CartItems = items };
+            cart.SetTotalPrice();
+            return View(cart);
+        }
+        [HttpPost]
+        public IActionResult Cart(int id, int quantity)
+        {
+            string json = HttpContext.Session.GetString("items");
+            List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
+            Cart cart = new Cart { CartItems = items };
+            cart.SetItemPrice(id, quantity);
+            cart.SetTotalPrice();
+            return View(cart);
+        }
+
+    }
 }
