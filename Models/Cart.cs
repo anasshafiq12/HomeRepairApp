@@ -3,7 +3,7 @@
     public class Cart
     {
         public List<CartItem> CartItems { get; set; }
-        public float TotalPrice { get; set; }
+        public float TotalPrice { get; set; } = 0;
         public void SetItemPriceAndQuantity(int id,int quantity)
         {
             foreach (var item in CartItems)
@@ -11,7 +11,7 @@
                 if (item.ItemId == id)
                 {
                     item.Price = item.Price * quantity;
-                    item.SelectedQuantity = quantity;
+                    item.SelectedQuantityByUser = quantity;
                 }
             }
         }

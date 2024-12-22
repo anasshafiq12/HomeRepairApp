@@ -14,7 +14,7 @@
                         <form asp-action="Cart" asp-controller="MarketPlace" method="post" id="quantityform">
                             <label for="quantity">Quantity</label>
                             <input type="hidden" name="id" id="itemId" value="@item.ItemId" />
-                            <input type="number" max="10" min="1" name="quantity" id="quantity" value="1" />
+                            <input type="number" max="10" min="1" name="quantity" id="quantity" value="@item.SelectedQuantityByUser" />
                             <button type="submit" id="submitBtn" style="display: none;"></button>
                         </form>
                     </div>

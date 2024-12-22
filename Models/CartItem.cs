@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseRepairApp.Models
 {
@@ -11,6 +12,7 @@ namespace HouseRepairApp.Models
         public string Description { get; set; }
         public float Price { get; set; }
         public int AvailableQuantity { get; set; }
-        public int SelectedQuantity { get; set; } = 1;
+        [DefaultValue(1)]
+        public int SelectedQuantityByUser { get; set; }
     }
 }

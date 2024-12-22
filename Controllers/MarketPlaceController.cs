@@ -70,6 +70,8 @@ namespace HouseRepairApp.Controllers
             Cart cart = new Cart { CartItems = items };
             cart.SetItemPriceAndQuantity(id, quantity);
             cart.SetTotalPrice();
+            string jsonItems = JsonSerializer.Serialize(items);
+            HttpContext.Session.SetString("items",jsonItems);
             return View(cart);
         }
 
