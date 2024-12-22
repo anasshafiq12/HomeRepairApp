@@ -15,9 +15,9 @@
                         <div class="card pricing-card rounded-0">
                             <img src=@Url.Content("~/"+ item.ImageUrl) class="card-img-top" alt="Master Texture Finish">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">@item.Name</h5>
-                                <p class="text-center card-features">@item.Description</p>
-                                <p class="card-price fw-bold">@item.Price</p>
+                                <h5 class="card-title fw-bold">Name: @item.Name</h5>
+                                <p class="text-center card-features">Description: @item.Description</p>
+                                <p class="card-price fw-bold">Price: $@item.Price</p>
                                 <form asp-action="Index" asp-controller="MarketPlace" method="post">
                                     <input type="hidden" name="id" value="@item.ItemId" />
                                     <button type="submit" class="btn btn-green rounded-0">Add to Cart</button>

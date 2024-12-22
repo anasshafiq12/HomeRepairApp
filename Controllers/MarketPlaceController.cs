@@ -43,11 +43,11 @@ namespace HouseRepairApp.Controllers
 		public IActionResult Cart()
 		{
 			string json = HttpContext.Session.GetString("ids");
-			List<int> ids = JsonSerializer.Deserialize<List<int>>(json);
+			List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
 			List<CartItem> items = new List<CartItem>();
-			foreach(int id in ids)
+			foreach(string id in ids)
 			{
-				CartItem item = _context.CartItems.Include(z => z.ItemId == id).FirstOrDefault();
+				CartItem item = _context.CartItems.Include(z => z.ItemId == int.Parse(id)).FirstOrDefault();
 				items.Add(item);
 			}
 			string jsonItems = JsonSerializer.Serialize(items);
