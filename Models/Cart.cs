@@ -4,12 +4,15 @@
     {
         public List<CartItem> CartItems { get; set; }
         public float TotalPrice { get; set; }
-        public void SetItemPrice (int id,int quantity)
+        public void SetItemPriceAndQuantity(int id,int quantity)
         {
             foreach (var item in CartItems)
             {
-                if(item.ItemId == id)
+                if (item.ItemId == id)
+                {
                     item.Price = item.Price * quantity;
+                    item.SelectedQuantity = quantity;
+                }
             }
         }
         public void SetTotalPrice()

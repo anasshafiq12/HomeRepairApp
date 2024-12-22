@@ -301,10 +301,6 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\KK ENTERPRISES\\Documents\\Project\\wwwroot\\uploads\\80f8e6e6-c48a-41ba-a084-42d96d22c323.jpg",
-      "PackagePath": "staticwebassets\\uploads\\80f8e6e6-c48a-41ba-a084-42d96d22c323.jpg"
-    },
-    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HouseRepairApp.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
