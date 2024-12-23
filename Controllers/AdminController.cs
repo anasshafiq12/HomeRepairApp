@@ -14,12 +14,16 @@ namespace HouseRepairApp.Controllers
             _context = context;
 			_environment = env;
         }
-        public IActionResult Index()
+		public IActionResult Home()
+		{
+			return View();
+		}
+        public IActionResult AddItem()
 		{
 			return View();
 		}
 		[HttpPost]
-		public IActionResult Index(CartItem item,IFormFile image)
+		public IActionResult AddItem(CartItem item,IFormFile image)
 		{
 			if (item == null || image == null)
 			{
