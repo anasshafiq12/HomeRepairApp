@@ -44,7 +44,6 @@ namespace HouseRepairApp.Controllers
 
             string jsonItems = HttpContext.Session.GetString("cartItems");
             List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(jsonItems) ?? new List<CartItem>();
-
             return View(items);
         }
         public IActionResult Cart()
