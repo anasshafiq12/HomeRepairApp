@@ -76,6 +76,10 @@ namespace HouseRepairApp.Data.Migrations
                     b.Property<int>("AvailableQuantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -96,6 +100,10 @@ namespace HouseRepairApp.Data.Migrations
 
                     b.Property<int>("SelectedQuantityByUser")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ItemId");
 

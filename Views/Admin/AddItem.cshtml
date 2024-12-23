@@ -7,7 +7,7 @@
         <h1 class="h2">Product Add</h1>
     </div>
 
-    <form asp-action="AddItem" asp-controller="MarketPlace" enctype="multipart/form-data">
+    <form asp-action="AddItem" asp-controller="Admin" enctype="multipart/form-data">
         <div class="row mb-3">
             <div class="col-md-6">
                 <label for="productName" class="form-label">Product Name</label>
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-6">
                 <label for="imageUpload" class="form-label">Upload Image</label>
-                <input class="form-control" name="ImageUrl" type="file" id="imageUpload">
+                <input class="form-control" name="image" type="file" id="imageUpload">
             </div>
         </div>
 
