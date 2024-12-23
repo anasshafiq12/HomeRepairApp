@@ -21,6 +21,7 @@ namespace HouseRepairApp.Controllers
         public IActionResult AddItem()
 		{
 			return View();
+
 		}
 		[HttpPost]
 		public IActionResult AddItem(CartItem item,IFormFile image)
@@ -72,6 +73,11 @@ namespace HouseRepairApp.Controllers
 			_context.Bookings.Remove(booking);
             _context.SaveChanges();
             return RedirectToAction("Bookings", "Admin");
+		}
+		public IActionResult Users()
+		{
+            List<MyUser> users = _context.Users.ToList();
+            return View(users);
 		}
 	}
 }

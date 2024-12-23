@@ -66,10 +66,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KK ENTERPRISES/Documents/Project/Views/Admin/Shared/_AdminLayout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/KK ENTERPRISES/Documents/Project/Views/ContactUs/Booking.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdFVzXEJvb2tpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -104,6 +100,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/KK ENTERPRISES/Documents/Project/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KK ENTERPRISES/Documents/Project/Views/Shared/_AdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KK ENTERPRISES/Documents/Project/Views/Shared/_LoginPartial.cshtml]
