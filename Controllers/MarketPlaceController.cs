@@ -62,7 +62,8 @@ namespace HouseRepairApp.Controllers
             HttpContext.Session.SetString("items", jsonItems);
             Cart cart = new Cart { CartItems = items };
             cart.SetTotalPrice();
-            return View(cart);
+			ViewBag.Status = TempData["Status"]; // Pass TempData to the view via ViewBag
+			return View(cart);
         }
         [HttpPost]
         public IActionResult Cart(int id, int quantity)
@@ -88,6 +89,11 @@ namespace HouseRepairApp.Controllers
             HttpContext.Session.SetString("items",jsonItems);
             return View(cart);
         }
-
+        public IActionResult Order()
+        {
+            // order processing
+            TempData["Status"] = "Order Placed";
+            return RedirectToAction("Cart","MarketPlace");
+        }
     }
 }

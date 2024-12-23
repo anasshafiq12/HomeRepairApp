@@ -28,9 +28,21 @@
                 <input type="text" class="form-control my-3" placeholder="Coupon Code">
                 <button class="btn btn-dark w-100">Apply</button>
             </div>
-            <div class="mt-3">
-                <button class="btn cart-total-btn w-100">Cart Total: $@Model.TotalPrice</button>
-            </div>
+            @if(ViewBag.Status == null)
+            {
+                <div class="mt-3">
+                    <a asp-action="Order" asp-controller="MarketPlace"
+                       class="btn cart-total-btn w-100 mt-2">
+                        Cart Total: $@Model.TotalPrice
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success mt-2">
+                    @ViewBag.Status 
+                </div>
+            }
         </div>
     </div>
 </div>
