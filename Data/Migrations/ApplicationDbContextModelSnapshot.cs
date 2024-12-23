@@ -91,6 +91,9 @@ namespace HouseRepairApp.Data.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<float>("PriceWrtQuanity")
+                        .HasColumnType("real");
+
                     b.Property<int>("SelectedQuantityByUser")
                         .HasColumnType("int");
 

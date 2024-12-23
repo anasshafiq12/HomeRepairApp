@@ -12,6 +12,7 @@ namespace HouseRepairApp.Models
         public string Description { get; set; }
         public float Price { get; set; }
         public int AvailableQuantity { get; set; }
+        public float PriceWrtQuanity { get; set; }
         [DefaultValue(1)]
         public int SelectedQuantityByUser { get; set; }
     }
