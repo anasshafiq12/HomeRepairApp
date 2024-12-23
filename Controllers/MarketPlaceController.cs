@@ -34,9 +34,12 @@ namespace HouseRepairApp.Controllers
             {
                 string json = HttpContext.Session.GetString("ids");
                 List<string> ids = JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>();
-                ids.Add(id);
-                string jsonIds = JsonSerializer.Serialize(ids);
-                HttpContext.Session.SetString("ids", jsonIds);
+                if (!ids.Contains(id))
+                {
+                    ids.Add(id);
+                    string jsonIds = JsonSerializer.Serialize(ids);
+                    HttpContext.Session.SetString("ids", jsonIds);
+                }
             }
 
             string jsonItems = HttpContext.Session.GetString("cartItems");
@@ -69,7 +72,17 @@ namespace HouseRepairApp.Controllers
             List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
             Cart cart = new Cart { CartItems = items };
             if (quantity == 0)
-                cart.RemoveItem(id);
+            {
+                items.RemoveAll(z => z.ItemId == id);
+                string jsonIds = HttpContext.Session.GetString("ids");
+                List<string> ids = JsonSerializer.Deserialize<List<string>>(jsonIds);
+                string userId = id.ToString();
+                if (ids.Remove(userId))
+                {
+                    jsonIds = JsonSerializer.Serialize(ids);
+                    HttpContext.Session.SetString("ids", jsonIds);
+                }
+            }
             cart.SetItemPriceAndQuantity(id, quantity);
             cart.SetTotalPrice();
             string jsonItems = JsonSerializer.Serialize(items);

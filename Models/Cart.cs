@@ -15,16 +15,6 @@
                 }
             }
         }
-        public void RemoveItem(int id)
-        {
-            foreach (var item in CartItems)
-            {
-                if (item.ItemId == id)
-                {
-                    CartItems.Remove(item);
-                }
-            }
-        }
         public void SetTotalPrice()
         {
             TotalPrice = 0;
