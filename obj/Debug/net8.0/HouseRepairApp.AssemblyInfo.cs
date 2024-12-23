@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HouseRepairApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e634beaca670d9721eb219e8c4dc81dcff121050")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db2c2c90504ce40069502a8404bd030f2723ba74")]
 [assembly: System.Reflection.AssemblyProductAttribute("HouseRepairApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HouseRepairApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
