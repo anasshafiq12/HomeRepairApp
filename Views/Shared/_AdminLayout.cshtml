@@ -50,4 +50,17 @@
         </main>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".dashboard-sidebar a");
+        const currentPath = window.location.pathname;
 
+        links.forEach(link => {
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    });
+</script>

@@ -2,46 +2,57 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-
-    <div class="container mt-5">
-        <div class="card shadow-lg">
-            <div class="card-header bg-primary text-white text-center">
-                <h2>Add Item</h2>
-            </div>
-            <div class="card-body">
-                <form asp-action="Index" asp-controller="Admin" method="post" enctype="multipart/form-data">
-                    <!-- Item Name -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Item Name</label>
-                        <input type="text" class="form-control" id="name" name="Name" placeholder="Enter item name" required>
-                    </div>
-                    <!-- Description -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="Description" rows="3" placeholder="Enter item description" required></textarea>
-                    </div>
-                    <!-- Price -->
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" name="Price" placeholder="Enter price" step="0.01" required>
-                    </div>
-                    <!-- Quantity -->
-                    <div class="mb-3">
-                        <label for="quantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" name="AvailableQuantity" placeholder="Enter quantity" min="1" required>
-                    </div>
-                    <!-- Item Photo -->
-                    <div class="mb-3">
-                        <label for="photo" class="form-label">Item Photo</label>
-                        <input type="file" class="form-control" id="photo" name="image" accept="image/*" required>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary w-100">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+<div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Product Add</h1>
     </div>
 
+    <form asp-action="AddItem" asp-controller="MarketPlace" enctype="multipart/form-data">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="Name" placeholder="Enter Product Name">
+            </div>
+            <div class="col-md-3">
+                <label for="quantity" class="form-label">Qty</label>
+                <input type="number" min="1" class="form-control" name="AvailableQuantity" id="quantity" value="1">
+            </div>
+            <div class="col-md-3">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" name="Status" class="form-select">
+                    <option selected>In Stock</option>
+                    <option>Out of Stock</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Product Description</label>
+            <textarea class="form-control" id="description" name="Description" rows="3" placeholder="Enter Product Description"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" class="form-control" id="category" name="Category" placeholder="Enter Product Category">
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="price" class="form-label">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" name="Price" id="price" value="100">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="imageUpload" class="form-label">Upload Image</label>
+                <input class="form-control" name="ImageUrl" type="file" id="imageUpload">
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="reset" class="btn btn-secondary me-2">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add New Product</button>
+        </div>
+    </form>
+</div>
