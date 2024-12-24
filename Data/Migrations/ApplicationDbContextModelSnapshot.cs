@@ -92,9 +92,6 @@ namespace HouseRepairApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -109,8 +106,6 @@ namespace HouseRepairApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ItemId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("CartItems");
                 });
@@ -199,6 +194,10 @@ namespace HouseRepairApp.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ItemsId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -347,13 +346,6 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
-                {
-                    b.HasOne("HouseRepairApp.Models.Order", null)
-                        .WithMany("CartItems")
-                        .HasForeignKey("OrderId");
-                });
-
             modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
                 {
                     b.HasOne("HouseRepairApp.Models.MyUser", "User")
@@ -412,11 +404,6 @@ namespace HouseRepairApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

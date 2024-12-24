@@ -103,13 +103,14 @@ namespace HouseRepairApp.Controllers
         }
         public IActionResult Order()
         {
-            //string jsonEmail = HttpContext.Session.GetString("email");
-            //string email = JsonSerializer.Deserialize<string>(jsonEmail).ToString();
-            //MyUser user = _context.Users.FirstOrDefault( z => z.Email == email);
-            //string jsonItems = HttpContext.Session.GetString("items");
-            //List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
-            //Order order = new Order { User = user, CartItems = cartItems };
-            //_context.Orders.Add(order);
+            string jsonEmail = HttpContext.Session.GetString("email");
+            string email = JsonSerializer.Deserialize<string>(jsonEmail);
+            MyUser user = _context.Users.FirstOrDefault(z => z.Email == email);
+            string jsonItems = HttpContext.Session.GetString("items");
+            List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
+            Order order = new Order { User = user, cartItems = cartItems };
+            _context.Orders.Add(order);
+            _context.SaveChanges();
             TempData["Status"] = "Order Placed";
             return RedirectToAction("Cart","MarketPlace");
         }

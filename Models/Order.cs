@@ -7,6 +7,6 @@ namespace HouseRepairApp.Models
         [Key]
         public int Id { get; set; }
         public MyUser User { get; set; }
-        public List<CartItem> CartItems { get; set; }
+        public List<CartItem> cartItems { get; set; }
     }
 }
