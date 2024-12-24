@@ -48,6 +48,17 @@ namespace HouseRepairApp.Controllers
         }
         public IActionResult Cart()
         {
+            // If items already selected
+            if(HttpContext.Session.Keys.Contains("items"))
+            {
+                string jsonitems = HttpContext.Session.GetString("items");
+                List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
+                Cart cartP = new Cart { CartItems = cartItems };
+                cartP.SetTotalPrice();
+                ViewBag.Status = TempData["Status"]; // Pass TempData to the view via ViewBag
+                return View(cartP);
+            }
+            // if items not already selected
             string json = HttpContext.Session.GetString("ids");
             if (string.IsNullOrEmpty(json))
                 return RedirectToAction("Index", "MarketPlace");
@@ -85,13 +96,20 @@ namespace HouseRepairApp.Controllers
             }
             cart.SetItemPriceAndQuantity(id, quantity);
             cart.SetTotalPrice();
-            string jsonItems = JsonSerializer.Serialize(items);
+
+            string jsonItems = JsonSerializer.Serialize(cart.CartItems);
             HttpContext.Session.SetString("items",jsonItems);
             return View(cart);
         }
         public IActionResult Order()
         {
-            // order processing
+            //string jsonEmail = HttpContext.Session.GetString("email");
+            //string email = JsonSerializer.Deserialize<string>(jsonEmail).ToString();
+            //MyUser user = _context.Users.FirstOrDefault( z => z.Email == email);
+            //string jsonItems = HttpContext.Session.GetString("items");
+            //List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
+            //Order order = new Order { User = user, CartItems = cartItems };
+            //_context.Orders.Add(order);
             TempData["Status"] = "Order Placed";
             return RedirectToAction("Cart","MarketPlace");
         }

@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace HouseRepairApp.Areas.Identity.Pages.Account
 {
@@ -123,7 +125,10 @@ namespace HouseRepairApp.Areas.Identity.Pages.Account
                 user.Address = Input.Address;
                 user.Phone = Input.Phone;
 
-                
+                // store user-email in session
+                string json = System.Text.Json.JsonSerializer.Serialize(Input.Email);
+                HttpContext.Session.SetString("email", json);
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
