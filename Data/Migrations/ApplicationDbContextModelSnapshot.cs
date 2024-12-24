@@ -92,6 +92,9 @@ namespace HouseRepairApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -106,6 +109,8 @@ namespace HouseRepairApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("CartItems");
                 });
@@ -185,6 +190,24 @@ namespace HouseRepairApp.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -324,6 +347,22 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
+                {
+                    b.HasOne("HouseRepairApp.Models.Order", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
+                {
+                    b.HasOne("HouseRepairApp.Models.MyUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -373,6 +412,11 @@ namespace HouseRepairApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }
