@@ -2,6 +2,7 @@
 using HouseRepairApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using System.Text.Json;
 
@@ -104,6 +105,8 @@ namespace HouseRepairApp.Controllers
         public IActionResult Order()
         {
             string jsonEmail = HttpContext.Session.GetString("email");
+            if (jsonEmail.IsNullOrEmpty())
+                return RedirectToAction("Login"); // go to login controller if not login 
             string email = JsonSerializer.Deserialize<string>(jsonEmail);
             MyUser user = _context.Users.FirstOrDefault(u => u.Email == email);
 
@@ -122,7 +125,7 @@ namespace HouseRepairApp.Controllers
                 User = user,
                 cartItems = cartItems
             };
-
+            order.SetTotalPrice();
             _context.Orders.Add(order);
             _context.SaveChanges();
 
@@ -131,6 +134,10 @@ namespace HouseRepairApp.Controllers
             return RedirectToAction("Cart", "MarketPlace");
         }
 
-
+        public IActionResult OrdersList()
+        {
+            List<Order> orders = _context.Orders.ToList() ?? new List<Order> { };
+            return View(orders);
+        }
     }
 }
