@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouseRepairApp.Models
 {
@@ -17,5 +18,10 @@ namespace HouseRepairApp.Models
         public float PriceWrtQuanity { get; set; }
         [DefaultValue(1)]
         public int SelectedQuantityByUser { get; set; }
+
+        // Foreign key for Order
+        [ForeignKey("Order")]
+        public int? OrderId { get; set; } // Nullable foreign key to allow detached items
+        public Order Order { get; set; } // Navigation property
     }
 }

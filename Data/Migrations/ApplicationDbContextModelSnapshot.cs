@@ -92,6 +92,12 @@ namespace HouseRepairApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId2")
+                        .HasColumnType("int");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -106,6 +112,10 @@ namespace HouseRepairApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("OrderId2");
 
                     b.ToTable("CartItems");
                 });
@@ -189,20 +199,16 @@ namespace HouseRepairApp.Data.Migrations
 
             modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ItemsId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId");
 
                     b.HasIndex("UserId");
 
@@ -346,6 +352,20 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
+                {
+                    b.HasOne("HouseRepairApp.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("HouseRepairApp.Models.Order", null)
+                        .WithMany("cartItems")
+                        .HasForeignKey("OrderId2")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
                 {
                     b.HasOne("HouseRepairApp.Models.MyUser", "User")
@@ -404,6 +424,11 @@ namespace HouseRepairApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
+                {
+                    b.Navigation("cartItems");
                 });
 #pragma warning restore 612, 618
         }

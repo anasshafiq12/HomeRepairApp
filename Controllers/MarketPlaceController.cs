@@ -105,14 +105,32 @@ namespace HouseRepairApp.Controllers
         {
             string jsonEmail = HttpContext.Session.GetString("email");
             string email = JsonSerializer.Deserialize<string>(jsonEmail);
-            MyUser user = _context.Users.FirstOrDefault(z => z.Email == email);
+            MyUser user = _context.Users.FirstOrDefault(u => u.Email == email);
+
             string jsonItems = HttpContext.Session.GetString("items");
             List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
-            Order order = new Order { User = user, cartItems = cartItems };
+
+            // Detach existing CartItems to avoid re-inserting them
+            foreach (var item in cartItems)
+            {
+                _context.Entry(item).State = EntityState.Unchanged; // Ensure EF Core doesn't try to insert these
+            }
+
+            // Create and add Order
+            Order order = new Order
+            {
+                User = user,
+                cartItems = cartItems
+            };
+
             _context.Orders.Add(order);
             _context.SaveChanges();
+
             TempData["Status"] = "Order Placed";
-            return RedirectToAction("Cart","MarketPlace");
+           // HttpContext.Session.Remove("items"); // Clear cart after placing the order
+            return RedirectToAction("Cart", "MarketPlace");
         }
+
+
     }
 }
