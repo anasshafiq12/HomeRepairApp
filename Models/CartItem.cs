@@ -19,9 +19,5 @@ namespace HouseRepairApp.Models
         [DefaultValue(1)]
         public int SelectedQuantityByUser { get; set; }
 
-        // Foreign key for Order
-        [ForeignKey("Order")]
-        public int? OrderId { get; set; } // Nullable foreign key to allow detached items
-        public Order Order { get; set; } // Navigation property
     }
 }

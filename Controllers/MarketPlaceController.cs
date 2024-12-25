@@ -112,7 +112,7 @@ namespace HouseRepairApp.Controllers
 
             string jsonItems = HttpContext.Session.GetString("items");
             List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
-
+            Cart cart = new Cart { CartItems = cartItems };
             // Detach existing CartItems to avoid re-inserting them
             foreach (var item in cartItems)
             {
@@ -123,14 +123,19 @@ namespace HouseRepairApp.Controllers
             Order order = new Order
             {
                 User = user,
-                cartItems = cartItems
+                Cart = cart
             };
-            order.SetTotalPrice();
+            order.Cart.SetTotalPrice();
+            _context.Carts.Add(order.Cart);
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-            TempData["Status"] = "Order Placed";
-           // HttpContext.Session.Remove("items"); // Clear cart after placing the order
+           // Order order1 = _context.Orders.FirstOrDefault();
+            Cart cart1 = _context.Carts.FirstOrDefault();
+            TempData["Status"] = order.Cart.CartItems.First().Name;
+
+            //TempData["Status"] = "Order Placed";
+            // HttpContext.Session.Remove("items"); // Clear cart after placing the order
             return RedirectToAction("Cart", "MarketPlace");
         }
 

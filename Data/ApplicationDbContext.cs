@@ -12,16 +12,20 @@ namespace HouseRepairApp.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Ensures Identity tables are set up correctly
-
-            modelBuilder.Entity<Order>()
-                .HasMany(o => o.cartItems)
-                .WithOne()
+            modelBuilder.Entity<Cart>()
+                .HasOne(cart => cart.Order)
+                .WithOne(order => order.Cart)
+                .HasForeignKey<Cart>(cart => cart.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
         }
+
+
 
         public DbSet<Booking> Bookings { get; set; } // table
         public DbSet<CartItem> CartItems { get; set; } // table
+        public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; } // table
     }
 }

@@ -65,6 +65,29 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("Bookings");
                 });
 
+            modelBuilder.Entity("HouseRepairApp.Models.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.ToTable("Carts");
+                });
+
             modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
                 {
                     b.Property<int>("ItemId")
@@ -74,6 +97,9 @@ namespace HouseRepairApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
 
                     b.Property<int>("AvailableQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CartId")
                         .HasColumnType("int");
 
                     b.Property<string>("Category")
@@ -92,12 +118,6 @@ namespace HouseRepairApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId2")
-                        .HasColumnType("int");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -113,9 +133,7 @@ namespace HouseRepairApp.Data.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("OrderId2");
+                    b.HasIndex("CartId");
 
                     b.ToTable("CartItems");
                 });
@@ -352,18 +370,21 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
+            modelBuilder.Entity("HouseRepairApp.Models.Cart", b =>
                 {
                     b.HasOne("HouseRepairApp.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("HouseRepairApp.Models.Order", null)
-                        .WithMany("cartItems")
-                        .HasForeignKey("OrderId2")
+                        .WithOne("Cart")
+                        .HasForeignKey("HouseRepairApp.Models.Cart", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
+                {
+                    b.HasOne("HouseRepairApp.Models.Cart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
@@ -426,9 +447,15 @@ namespace HouseRepairApp.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HouseRepairApp.Models.Cart", b =>
+                {
+                    b.Navigation("CartItems");
+                });
+
             modelBuilder.Entity("HouseRepairApp.Models.Order", b =>
                 {
-                    b.Navigation("cartItems");
+                    b.Navigation("Cart")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
