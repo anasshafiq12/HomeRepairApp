@@ -8,17 +8,12 @@ namespace HouseRepairApp.Models
         [Key]
         public int CartId { get; set; } // Primary key
 
+        public string UserId { get; set; }
         // List of cart items
-        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
+        public ICollection<CartItem> CartItems { get; set; }
 
         public float TotalPrice { get; set; } = 0;
 
-        // Nullable foreign key to associate with an Order
-        [ForeignKey(nameof(Order))]
-        public int? OrderId { get; set; }
-
-        // Navigation property to the associated Order
-        public Order Order { get; set; }
 
         // Logic to update item quantities and total price
         public void SetItemPriceAndQuantity(int id, int quantity)

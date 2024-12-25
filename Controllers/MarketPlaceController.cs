@@ -121,19 +121,14 @@ namespace HouseRepairApp.Controllers
             }
 
             // Create and add Order
-            Order order = new Order
-            {
-                User = user,
-                Cart = cart
-            };
-            order.Cart.SetTotalPrice();
-            _context.Carts.Add(order.Cart);
-            _context.Orders.Add(order);
+            cart.SetTotalPrice();
+            cart.UserId = user.Id;
+            _context.Carts.Add(cart);
+  
             _context.SaveChanges();
-
-            Order order1 = _context.Orders.FirstOrDefault();
+            Cart cart1 = _context.Carts.FirstOrDefault();
             HttpContext.Session.SetString("orderStatus", "placed");
-            TempData["Status"] = "Order Placed";
+            TempData["Status"] = cart1.CartItems.First().Name;
 
             //TempData["Status"] = "Order Placed";
             // HttpContext.Session.Remove("items"); // Clear cart after placing the order
@@ -142,8 +137,9 @@ namespace HouseRepairApp.Controllers
 
         public IActionResult OrdersList()
         {
-            List<Order> orders = _context.Orders.ToList() ?? new List<Order> { };
-            return View(orders);
+            //List<Order> orders = _context.Orders.ToList() ?? new List<Order> { };
+            List<Cart> carts = _context.Carts.ToList();
+            return View(carts);
         }
     }
 }
