@@ -10,6 +10,7 @@ namespace HouseRepairApp.Models
         public MyUser User { get; set; } // Associated user (optional)
 
         // Navigation property to the associated Cart
+
         public Cart Cart { get; set; }
     }
 }

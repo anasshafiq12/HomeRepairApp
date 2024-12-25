@@ -301,14 +301,6 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\wwwroot\\uploads\\1c91691d-1f8c-4cca-b3c6-ea4f9336274e.jpg",
-      "PackagePath": "staticwebassets\\uploads\\1c91691d-1f8c-4cca-b3c6-ea4f9336274e.jpg"
-    },
-    {
-      "Id": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\wwwroot\\uploads\\ae598fbc-9eb6-42e2-9bc1-5c826d2ead3e.jpg",
-      "PackagePath": "staticwebassets\\uploads\\ae598fbc-9eb6-42e2-9bc1-5c826d2ead3e.jpg"
-    },
-    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HouseRepairApp.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

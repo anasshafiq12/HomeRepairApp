@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "w61iZbUQOYvSnO2xqHYUEAH7232gvQMp94ADU0BvWxY=",
+  "Hash": "sWHPjBgGPLz2iw8+lNcSRjesSbpD2aeNtaUfXXYLWw0=",
   "Source": "HouseRepairApp",
   "BasePath": "_content/HouseRepairApp",
   "Mode": "Default",
@@ -2599,44 +2599,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
-    },
-    {
-      "Identity": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\wwwroot\\uploads\\1c91691d-1f8c-4cca-b3c6-ea4f9336274e.jpg",
-      "SourceId": "HouseRepairApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\wwwroot\\",
-      "BasePath": "_content/HouseRepairApp",
-      "RelativePath": "uploads/1c91691d-1f8c-4cca-b3c6-ea4f9336274e.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\1c91691d-1f8c-4cca-b3c6-ea4f9336274e.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\wwwroot\\uploads\\ae598fbc-9eb6-42e2-9bc1-5c826d2ead3e.jpg",
-      "SourceId": "HouseRepairApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\wwwroot\\",
-      "BasePath": "_content/HouseRepairApp",
-      "RelativePath": "uploads/ae598fbc-9eb6-42e2-9bc1-5c826d2ead3e.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\ae598fbc-9eb6-42e2-9bc1-5c826d2ead3e.jpg"
     }
   ]
 }

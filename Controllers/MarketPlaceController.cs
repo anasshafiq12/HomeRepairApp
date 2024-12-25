@@ -56,7 +56,8 @@ namespace HouseRepairApp.Controllers
                 List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
                 Cart cartP = new Cart { CartItems = cartItems };
                 cartP.SetTotalPrice();
-                ViewBag.Status = TempData["Status"]; // Pass TempData to the view via ViewBag
+                if(HttpContext.Session.Keys.Contains("orderStatus"))
+                    ViewBag.Status = "Order Placed"; // Pass TempData to the view via ViewBag
                 return View(cartP);
             }
             // if items not already selected
@@ -130,9 +131,9 @@ namespace HouseRepairApp.Controllers
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-           // Order order1 = _context.Orders.FirstOrDefault();
-            Cart cart1 = _context.Carts.FirstOrDefault();
-            TempData["Status"] = order.Cart.CartItems.First().Name;
+            Order order1 = _context.Orders.FirstOrDefault();
+            HttpContext.Session.SetString("orderStatus", "placed");
+            TempData["Status"] = "Order Placed";
 
             //TempData["Status"] = "Order Placed";
             // HttpContext.Session.Remove("items"); // Clear cart after placing the order
