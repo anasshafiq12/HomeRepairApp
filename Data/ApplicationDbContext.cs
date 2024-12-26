@@ -12,11 +12,11 @@ namespace HouseRepairApp.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<CartItem>()
-            //    .HasOne(a => a.Cart)
-            //    .WithMany(a => a.CartItems)
-            //    .HasForeignKey(a => a.CartId)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<SelectedCartItem>()
+                .HasOne(a => a.Cart)
+                .WithMany(a => a.SelectedCartItems)
+                .HasForeignKey(a => a.CartId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -26,6 +26,7 @@ namespace HouseRepairApp.Data
         public DbSet<Booking> Bookings { get; set; } // table
         public DbSet<CartItem> CartItems { get; set; } // table
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<SelectedCartItem> SelectedCartItems { get; set; }
 
     }
 }

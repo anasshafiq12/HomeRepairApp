@@ -96,9 +96,6 @@ namespace HouseRepairApp.Data.Migrations
                     b.Property<int>("AvailableQuantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -129,8 +126,6 @@ namespace HouseRepairApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ItemId");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("CartItems");
                 });
@@ -210,6 +205,52 @@ namespace HouseRepairApp.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("HouseRepairApp.Models.SelectedCartItem", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
+
+                    b.Property<int>("AvailableQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PriceWrtQuanity")
+                        .HasColumnType("real");
+
+                    b.Property<int>("SelectedQuantityByUser")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("SelectedCartItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -349,11 +390,15 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HouseRepairApp.Models.CartItem", b =>
+            modelBuilder.Entity("HouseRepairApp.Models.SelectedCartItem", b =>
                 {
-                    b.HasOne("HouseRepairApp.Models.Cart", null)
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId");
+                    b.HasOne("HouseRepairApp.Models.Cart", "Cart")
+                        .WithMany("SelectedCartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -409,7 +454,7 @@ namespace HouseRepairApp.Data.Migrations
 
             modelBuilder.Entity("HouseRepairApp.Models.Cart", b =>
                 {
-                    b.Navigation("CartItems");
+                    b.Navigation("SelectedCartItems");
                 });
 #pragma warning restore 612, 618
         }

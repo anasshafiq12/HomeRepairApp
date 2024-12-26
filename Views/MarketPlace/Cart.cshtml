@@ -2,7 +2,7 @@
 
 <div class="container my-5 cartbody">
     <div class="row">
-        @foreach (var item in Model.CartItems) {
+        @foreach (var item in Model.SelectedCartItems) {
             <div class="col-md-8">
                 <div class="cart-item d-flex align-items-center">
                     <img src=@Url.Content("~/"+item.ImageUrl) alt="Product" class="product-image me-3">

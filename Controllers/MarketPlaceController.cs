@@ -54,10 +54,26 @@ namespace HouseRepairApp.Controllers
             {
                 string jsonitems = HttpContext.Session.GetString("items");
                 List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
-                Cart cartP = new Cart { CartItems = cartItems };
+                List<SelectedCartItem> selectedCartItems1 = new List<SelectedCartItem>();
+                foreach (var cartItem in cartItems)
+                {
+                    SelectedCartItem item = new SelectedCartItem();
+                    item.Name = cartItem.Name;
+                    item.Price = cartItem.Price;
+                    item.Description = cartItem.Description;
+                    item.Category = cartItem.Category;
+                    item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                    item.ImageUrl = cartItem.ImageUrl;
+                    selectedCartItems1.Add(item);
+                }
+                Cart cartP = new Cart { SelectedCartItems = selectedCartItems1 };
                 cartP.SetTotalPrice();
-                if(HttpContext.Session.Keys.Contains("orderStatus"))
+                if (HttpContext.Session.Keys.Contains("orderStatus"))
+                {
+
                     ViewBag.Status = "Order Placed"; // Pass TempData to the view via ViewBag
+
+                }
                 return View(cartP);
             }
             // if items not already selected
@@ -73,7 +89,19 @@ namespace HouseRepairApp.Controllers
             }
             string jsonItems = JsonSerializer.Serialize(items);
             HttpContext.Session.SetString("items", jsonItems);
-            Cart cart = new Cart { CartItems = items };
+            List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
+            foreach (var cartItem in items)
+            {
+                SelectedCartItem item = new SelectedCartItem();
+                item.Name = cartItem.Name;
+                item.Price = cartItem.Price;
+                item.Description = cartItem.Description;
+                item.Category = cartItem.Category;
+                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                item.ImageUrl = cartItem.ImageUrl;
+                selectedCartItems.Add(item);
+            }
+            Cart cart = new Cart { SelectedCartItems = selectedCartItems };
             cart.SetTotalPrice();
 			ViewBag.Status = TempData["Status"]; // Pass TempData to the view via ViewBag
 			return View(cart);
@@ -83,7 +111,19 @@ namespace HouseRepairApp.Controllers
         {
             string json = HttpContext.Session.GetString("items");
             List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
-            Cart cart = new Cart { CartItems = items };
+            List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
+            foreach (var cartItem in items)
+            {
+                SelectedCartItem item = new SelectedCartItem();
+                item.Name = cartItem.Name;
+                item.Price = cartItem.Price;
+                item.Description = cartItem.Description;
+                item.Category = cartItem.Category;
+                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                item.ImageUrl = cartItem.ImageUrl;
+                selectedCartItems.Add(item);
+            }
+            Cart cart = new Cart { SelectedCartItems = selectedCartItems };
             if (quantity == 0)
             {
                 items.RemoveAll(z => z.ItemId == id);
@@ -98,8 +138,19 @@ namespace HouseRepairApp.Controllers
             }
             cart.SetItemPriceAndQuantity(id, quantity);
             cart.SetTotalPrice();
-
-            string jsonItems = JsonSerializer.Serialize(cart.CartItems);
+            List<CartItem> cartItems = new List<CartItem>();
+            foreach (var cartItem in selectedCartItems)
+            {
+                CartItem item = new CartItem();
+                item.Name = cartItem.Name;
+                item.Price = cartItem.Price;
+                item.Description = cartItem.Description;
+                item.Category = cartItem.Category;
+                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                item.ImageUrl = cartItem.ImageUrl;
+                cartItems.Add(item);
+            }
+            string jsonItems = JsonSerializer.Serialize(cartItems);
             HttpContext.Session.SetString("items",jsonItems);
             return View(cart);
         }
@@ -113,23 +164,48 @@ namespace HouseRepairApp.Controllers
 
             string jsonItems = HttpContext.Session.GetString("items");
             List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
-            Cart cart = new Cart { CartItems = cartItems };
-            // Detach existing CartItems to avoid re-inserting them
-            foreach (var item in cartItems)
+
+            List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
+            foreach (var cartItem in cartItems)
             {
-                _context.Entry(item).State = EntityState.Unchanged; // Ensure EF Core doesn't try to insert these
+                SelectedCartItem item = new SelectedCartItem();
+                item.Name = cartItem.Name;
+                item.Price = cartItem.Price;
+                item.Description = cartItem.Description;
+                item.Category = cartItem.Category;
+                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                item.ImageUrl = cartItem.ImageUrl;
+                selectedCartItems.Add(item);
             }
+            Cart cart = new Cart { SelectedCartItems = selectedCartItems };            // Detach existing CartItems to avoid re-inserting them
+            //foreach (var item in cartItems)
+            //{
+            //    _context.Entry(item).State = EntityState.Unchanged; // Ensure EF Core doesn't try to insert these
+            //}
 
             // Create and add Order
             cart.SetTotalPrice();
             cart.UserId = user.Id;
             _context.Carts.Add(cart);
-  
             _context.SaveChanges();
-            Cart cart1 = _context.Carts.FirstOrDefault();
+            Cart cartId = _context.Carts.FirstOrDefault(u => u.UserId == cart.UserId);
             HttpContext.Session.SetString("orderStatus", "placed");
-            TempData["Status"] = cart1.CartItems.First().Name;
+            List<SelectedCartItem> selectedCartItems2 = new List<SelectedCartItem>();
+            foreach(var  cartItem in cartItems)
+            {
+                SelectedCartItem item = new SelectedCartItem();
+                item.Name = cartItem.Name;
+                item.Price = cartItem.Price;
+                item.Description = cartItem.Description;
+                item.Category = cartItem.Category;
+                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser; 
+                item.ImageUrl = cartItem.ImageUrl;
+                item.CartId = cartId.CartId;
+                selectedCartItems2.Add(item);
+            }
 
+            _context.SelectedCartItems.AddRange(selectedCartItems2);
+            _context.SaveChanges();
             //TempData["Status"] = "Order Placed";
             // HttpContext.Session.Remove("items"); // Clear cart after placing the order
             return RedirectToAction("Cart", "MarketPlace");

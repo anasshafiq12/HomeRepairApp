@@ -79,5 +79,29 @@ namespace HouseRepairApp.Controllers
             List<MyUser> users = _context.Users.ToList();
             return View(users);
 		}
-	}
+		public List<Cart> GetCart(string userId)
+		{
+			List<Cart> cart = _context.Carts.Where(u => u.UserId == userId).ToList();
+			return cart;
+		}
+		public IActionResult OrdersList()
+		{
+			List<MyUser> users = _context.Users.ToList();
+			// List<Cart> carts = new List<Cart>();
+			List<Order> orders = new List<Order>();
+			foreach (MyUser user in users)
+			{
+                List<Cart> carts = GetCart(user.Id);
+				foreach (Cart cart in carts)
+				{
+					List<SelectedCartItem> selectedItems = _context.SelectedCartItems.Where(c => c.CartId == cart.CartId).ToList();
+					cart.SelectedCartItems = selectedItems;
+					Order order = new Order { Cart = cart, cartItems = selectedItems };
+					order.User = user;
+					orders.Add(order);
+				}
+			}
+            return View(orders);
+        }
+    }
 }

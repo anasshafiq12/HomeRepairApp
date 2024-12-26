@@ -1,17 +1,19 @@
-﻿@* @{
+﻿@* Set the layout *@
+@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@model List<Order>
+
+@model List<HouseRepairApp.Models.Order>
 
 <div class="container mt-5">
     <h1 class="text-center mb-4">Booking List</h1>
     <table class="table table-bordered table-hover">
         <thead class="btn-green">
             <tr>
-                <th>Order Id</th>
+                <th>Cart Id</th>
                 <th>User Id</th>
-                <th>User Name</th>
-                <th>User Email</th>
+                <th>Total Price</th>
+                <th>Selected Items Price</th>
                 <th>View Details</th>
                 <th>Delete Booking</th>
             </tr>
@@ -20,30 +22,32 @@
             @foreach (var order in Model)
             {
                 <tr>
-                    <td>@order.OrderId</td>
-                    <td>@order.User.Id</td>
-                    <td>@order.User.Name</td>
-                    <td>@order.User.Email</td>
+                    <td>@order.Cart.CartId</td>
+                    <td>@order.Cart.UserId</td>
+                    <td>@order.Cart.TotalPrice</td>
+                    <td>
+                        @order.Cart.SelectedCartItems.Sum(item => item.Price * item.SelectedQuantityByUser)
+                    </td>
                     <td>
                         <button class="btn btn-primary view-details"
                                 data-bs-toggle="modal"
                                 data-bs-target="#bookingDetailsModal"
-                                data-orderid="@order.OrderId"
-                                data-name="@order.User.Name"
-                                data-phone="@order.User.Phone"
-                                data-address="@order.User.Address"
-                                data-cartitems='@Newtonsoft.Json.JsonConvert.SerializeObject(order.cartItems)'>
+                                data-cartid="@order.Cart.CartId"
+                                data-totalprice="@order.Cart.TotalPrice"
+                                data-selectedtotalprice="@order.Cart.SelectedCartItems.Sum(item => item.Price * item.SelectedQuantityByUser)"
+                                data-selectedcartitems='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(order.Cart.SelectedCartItems.Select(item => new { item.Name, item.SelectedQuantityByUser, item.Price })))'>
                             View Details
                         </button>
                     </td>
                     <td>
-                        <form method="post" asp-action="Delete" asp-controller="Admin" onsubmit="return confirm('Are you sure you want to delete this order?');">
-                            <input type="hidden" name="id" value="@order.OrderId" />
+                        <form method="post" asp-action="Delete" asp-controller="Admin" onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                            <input type="hidden" name="id" value="@order.Cart.CartId" />
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
             }
+    
         </tbody>
     </table>
 </div>
@@ -53,17 +57,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="bookingDetailsModalLabel">Booking Details</h5>
+                <h5 class="modal-title" id="bookingDetailsModalLabel">Cart Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><strong>Order ID:</strong> <span id="modalId"></span></p>
-                <p><strong>Name:</strong> <span id="modalName"></span></p>
-                <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
-                <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+                <p><strong>Cart ID:</strong> <span id="modalCartId"></span></p>
+                <p><strong>Total Price:</strong> <span id="modalTotalPrice"></span></p>
+                <p><strong>Selected Items Price:</strong> <span id="modalSelectedTotalPrice"></span></p>
 
-                <h5>Cart Items:</h5>
-                <ul id="modalCartItems" class="list-group"></ul>
+                <h5>Selected Items:</h5>
+                <ul id="modalSelectedCartItems" class="list-group"></ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -78,24 +81,22 @@
         bookingTable.addEventListener('click', (event) => {
             const button = event.target.closest('.view-details');
             if (button) {
-                // Populate basic details
-                document.getElementById('modalId').textContent = button.dataset.orderid;
-                document.getElementById('modalName').textContent = button.dataset.name;
-                document.getElementById('modalPhone').textContent = button.dataset.phone;
-                document.getElementById('modalAddress').textContent = button.dataset.address;
+                // Populate cart details
+                document.getElementById('modalCartId').textContent = button.dataset.cartid;
+                document.getElementById('modalTotalPrice').textContent = button.dataset.totalprice;
+                document.getElementById('modalSelectedTotalPrice').textContent = button.dataset.selectedtotalprice;
 
-                // Parse and render cart items
-                const cartItems = JSON.parse(button.dataset.cartitems);
-                const modalCartItems = document.getElementById('modalCartItems');
-                modalCartItems.innerHTML = ''; // Clear previous items
-                cartItems.forEach(item => {
+                // Parse and render selected cart items
+                const selectedCartItems = JSON.parse(button.dataset.selectedcartitems);
+                const modalSelectedCartItems = document.getElementById('modalSelectedCartItems');
+                modalSelectedCartItems.innerHTML = ''; // Clear previous items
+                selectedCartItems.forEach(item => {
                     const listItem = document.createElement('li');
                     listItem.className = 'list-group-item';
-                    listItem.textContent = `${item.Name} - ${item.SelectedQuantityByUser} x ${item.Price} = ${item.SelectedQuantityByUser * item.Price}`;
-                    modalCartItems.appendChild(listItem);
+                    listItem.textContent = `${item.Name} - ${item.Quantity} x ${item.Price} = ${(item.Quantity * item.Price).toFixed(2)}`;
+                    modalSelectedCartItems.appendChild(listItem);
                 });
             }
         });
     });
 </script>
- *@
