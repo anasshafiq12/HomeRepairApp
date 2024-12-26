@@ -91,7 +91,7 @@ namespace HouseRepairApp.Controllers
 			List<Order> orders = new List<Order>();
 			foreach (MyUser user in users)
 			{
-                List<Cart> carts = GetCart(user.Id);
+				List<Cart> carts = GetCart(user.Id);
 				foreach (Cart cart in carts)
 				{
 					List<SelectedCartItem> selectedItems = _context.SelectedCartItems.Where(c => c.CartId == cart.CartId).ToList();
@@ -101,7 +101,24 @@ namespace HouseRepairApp.Controllers
 					orders.Add(order);
 				}
 			}
-            return View(orders);
-        }
+			return View(orders);
+		}
+		[HttpPost]
+		public IActionResult DeleteOrder(int cartId)
+		{
+			Cart cart = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
+			if(cart != null)
+				_context.Carts.Remove(cart);
+			List<SelectedCartItem> selectedCartItems = _context.SelectedCartItems.Where(c => c.CartId == cartId).ToList();
+			foreach(var item in selectedCartItems)
+			{
+				if(item != null)
+					_context.SelectedCartItems.Remove(item);
+			}
+			_context.SaveChanges();
+			return RedirectToAction("OrdersList","Admin");
+		}
+
+
     }
 }
