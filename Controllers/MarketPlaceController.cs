@@ -164,7 +164,7 @@ namespace HouseRepairApp.Controllers
         {
             string jsonEmail = HttpContext.Session.GetString("email");
             if (jsonEmail.IsNullOrEmpty())
-                return RedirectToAction("Login"); // go to login controller if not login 
+                return Redirect("/Identity/Account/Login");
             string email = JsonSerializer.Deserialize<string>(jsonEmail);
             MyUser user = _context.Users.FirstOrDefault(u => u.Email == email);
 
