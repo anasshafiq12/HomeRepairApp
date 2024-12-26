@@ -64,6 +64,9 @@ namespace HouseRepairApp.Controllers
                     item.Category = cartItem.Category;
                     item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
                     item.ImageUrl = cartItem.ImageUrl;
+                    item.AvailableQuantity = cartItem.AvailableQuantity;
+                    item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
+
                     selectedCartItems1.Add(item);
                 }
                 Cart cartP = new Cart { SelectedCartItems = selectedCartItems1 };
@@ -99,6 +102,7 @@ namespace HouseRepairApp.Controllers
                 item.Category = cartItem.Category;
                 item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
                 item.ImageUrl = cartItem.ImageUrl;
+                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
                 selectedCartItems.Add(item);
             }
             Cart cart = new Cart { SelectedCartItems = selectedCartItems };
@@ -121,6 +125,7 @@ namespace HouseRepairApp.Controllers
                 item.Category = cartItem.Category;
                 item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
                 item.ImageUrl = cartItem.ImageUrl;
+                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
                 selectedCartItems.Add(item);
             }
             Cart cart = new Cart { SelectedCartItems = selectedCartItems };
@@ -148,6 +153,7 @@ namespace HouseRepairApp.Controllers
                 item.Category = cartItem.Category;
                 item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
                 item.ImageUrl = cartItem.ImageUrl;
+                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
                 cartItems.Add(item);
             }
             string jsonItems = JsonSerializer.Serialize(cartItems);
@@ -175,6 +181,7 @@ namespace HouseRepairApp.Controllers
                 item.Category = cartItem.Category;
                 item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
                 item.ImageUrl = cartItem.ImageUrl;
+                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
                 selectedCartItems.Add(item);
             }
             Cart cart = new Cart { SelectedCartItems = selectedCartItems };            // Detach existing CartItems to avoid re-inserting them
@@ -201,6 +208,7 @@ namespace HouseRepairApp.Controllers
                 item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser; 
                 item.ImageUrl = cartItem.ImageUrl;
                 item.CartId = cartId.CartId;
+                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
                 selectedCartItems2.Add(item);
             }
 

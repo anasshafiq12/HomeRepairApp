@@ -11,9 +11,8 @@
         <thead class="btn-green">
             <tr>
                 <th>Cart Id</th>
-                <th>User Id</th>
+                <th>User Name</th>
                 <th>Total Price</th>
-                <th>Selected Items Price</th>
                 <th>View Details</th>
                 <th>Delete Booking</th>
             </tr>
@@ -23,15 +22,17 @@
             {
                 <tr>
                     <td>@order.Cart.CartId</td>
-                    <td>@order.Cart.UserId</td>
+                    <td>@order.User?.Name</td>
                     <td>@order.Cart.TotalPrice</td>
-                    <td>
-                        @order.Cart.SelectedCartItems.Sum(item => item.Price * item.SelectedQuantityByUser)
-                    </td>
                     <td>
                         <button class="btn btn-primary view-details"
                                 data-bs-toggle="modal"
                                 data-bs-target="#bookingDetailsModal"
+                                data-userid="@order.User?.Id"
+                                data-username="@order.User?.Name"
+                                data-useremail="@order.User?.Email"
+                                data-userphone="@order.User?.Phone"
+                                data-useraddress="@order.User?.Address"
                                 data-cartid="@order.Cart.CartId"
                                 data-totalprice="@order.Cart.TotalPrice"
                                 data-selectedtotalprice="@order.Cart.SelectedCartItems.Sum(item => item.Price * item.SelectedQuantityByUser)"
@@ -47,7 +48,6 @@
                     </td>
                 </tr>
             }
-    
         </tbody>
     </table>
 </div>
@@ -61,10 +61,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <p><strong>User ID:</strong> <span id="modalUserId"></span></p>
+                <p><strong>Name:</strong> <span id="modalUserName"></span></p>
+                <p><strong>Email:</strong> <span id="modalUserEmail"></span></p>
+                <p><strong>Phone:</strong> <span id="modalUserPhone"></span></p>
+                <p><strong>Address:</strong> <span id="modalUserAddress"></span></p>
+                <hr>
                 <p><strong>Cart ID:</strong> <span id="modalCartId"></span></p>
                 <p><strong>Total Price:</strong> <span id="modalTotalPrice"></span></p>
-                <p><strong>Selected Items Price:</strong> <span id="modalSelectedTotalPrice"></span></p>
-
                 <h5>Selected Items:</h5>
                 <ul id="modalSelectedCartItems" class="list-group"></ul>
             </div>
@@ -81,10 +85,16 @@
         bookingTable.addEventListener('click', (event) => {
             const button = event.target.closest('.view-details');
             if (button) {
+                // Populate user details
+                document.getElementById('modalUserId').textContent = button.dataset.userid || "N/A";
+                document.getElementById('modalUserName').textContent = button.dataset.username || "N/A";
+                document.getElementById('modalUserEmail').textContent = button.dataset.useremail || "N/A";
+                document.getElementById('modalUserPhone').textContent = button.dataset.userphone || "N/A";
+                document.getElementById('modalUserAddress').textContent = button.dataset.useraddress || "N/A";
+
                 // Populate cart details
                 document.getElementById('modalCartId').textContent = button.dataset.cartid;
                 document.getElementById('modalTotalPrice').textContent = button.dataset.totalprice;
-                document.getElementById('modalSelectedTotalPrice').textContent = button.dataset.selectedtotalprice;
 
                 // Parse and render selected cart items
                 const selectedCartItems = JSON.parse(button.dataset.selectedcartitems);
@@ -93,7 +103,7 @@
                 selectedCartItems.forEach(item => {
                     const listItem = document.createElement('li');
                     listItem.className = 'list-group-item';
-                    listItem.textContent = `${item.Name} - ${item.Quantity} x ${item.Price} = ${(item.Quantity * item.Price).toFixed(2)}`;
+                    listItem.textContent = `${item.Name} - ${item.SelectedQuantityByUser} x ${item.Price} = ${(item.SelectedQuantityByUser * item.Price).toFixed(2)}`;
                     modalSelectedCartItems.appendChild(listItem);
                 });
             }
