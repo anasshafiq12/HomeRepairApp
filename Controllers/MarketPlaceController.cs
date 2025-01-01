@@ -25,6 +25,7 @@ namespace HouseRepairApp.Controllers
         [HttpPost]
         public IActionResult Index(string id)
         {
+            Console.WriteLine(id);
             if (!HttpContext.Session.Keys.Contains("ids"))
             {
                 List<string> ids = new List<string> { id };
@@ -38,8 +39,8 @@ namespace HouseRepairApp.Controllers
                 if (!ids.Contains(id))
                 {
                     ids.Add(id);
-                    string jsonIds = JsonSerializer.Serialize(ids);
-                    HttpContext.Session.SetString("ids", jsonIds);
+                    string jsonids = JsonSerializer.Serialize(ids);
+                    HttpContext.Session.SetString("ids", jsonids);
                 }
             }
 
@@ -52,12 +53,23 @@ namespace HouseRepairApp.Controllers
             // If items already selected
             if(HttpContext.Session.Keys.Contains("items"))
             {
-                string jsonitems = HttpContext.Session.GetString("items");
-                List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
+                // string jsonitems = HttpContext.Session.GetString("items");
+                //List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
+                string jsonIds = HttpContext.Session.GetString("ids");
+                List<string> idsList = JsonSerializer.Deserialize<List<string>>(jsonIds);
+                List<CartItem> cartItems = new List<CartItem>();
+                foreach (string id in idsList)
+                {
+                    CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
+                    cartItems.Add(item);
+                }
+                string jsonItemsP = JsonSerializer.Serialize(cartItems);
+                HttpContext.Session.SetString("items", jsonItemsP);
                 List<SelectedCartItem> selectedCartItems1 = new List<SelectedCartItem>();
                 foreach (var cartItem in cartItems)
                 {
                     SelectedCartItem item = new SelectedCartItem();
+                    item.ItemId = cartItem.ItemId;
                     item.Name = cartItem.Name;
                     item.Price = cartItem.Price;
                     item.Description = cartItem.Description;
@@ -83,6 +95,7 @@ namespace HouseRepairApp.Controllers
             string json = HttpContext.Session.GetString("ids");
             if (string.IsNullOrEmpty(json))
                 return RedirectToAction("Index", "MarketPlace");
+
             List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
             List<CartItem> items = new List<CartItem>();
             foreach (string id in ids)
@@ -96,6 +109,7 @@ namespace HouseRepairApp.Controllers
             foreach (var cartItem in items)
             {
                 SelectedCartItem item = new SelectedCartItem();
+                item.ItemId = cartItem.ItemId;
                 item.Name = cartItem.Name;
                 item.Price = cartItem.Price;
                 item.Description = cartItem.Description;
@@ -119,6 +133,7 @@ namespace HouseRepairApp.Controllers
             foreach (var cartItem in items)
             {
                 SelectedCartItem item = new SelectedCartItem();
+                item.ItemId = cartItem.ItemId;
                 item.Name = cartItem.Name;
                 item.Price = cartItem.Price;
                 item.Description = cartItem.Description;
@@ -131,11 +146,12 @@ namespace HouseRepairApp.Controllers
             Cart cart = new Cart { SelectedCartItems = selectedCartItems };
             if (quantity == 0)
             {
-                items.RemoveAll(z => z.ItemId == id);
+                
+                selectedCartItems.RemoveAll(z => z.ItemId == id);
                 string jsonIds = HttpContext.Session.GetString("ids");
                 List<string> ids = JsonSerializer.Deserialize<List<string>>(jsonIds);
-                string userId = id.ToString();
-                if (ids.Remove(userId))
+                string productId = id.ToString();
+                if (ids.Remove(productId))
                 {
                     jsonIds = JsonSerializer.Serialize(ids);
                     HttpContext.Session.SetString("ids", jsonIds);
@@ -147,6 +163,7 @@ namespace HouseRepairApp.Controllers
             foreach (var cartItem in selectedCartItems)
             {
                 CartItem item = new CartItem();
+                item.ItemId = cartItem.ItemId;
                 item.Name = cartItem.Name;
                 item.Price = cartItem.Price;
                 item.Description = cartItem.Description;
@@ -184,12 +201,8 @@ namespace HouseRepairApp.Controllers
                 item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
                 selectedCartItems.Add(item);
             }
-            Cart cart = new Cart { SelectedCartItems = selectedCartItems };            // Detach existing CartItems to avoid re-inserting them
-            //foreach (var item in cartItems)
-            //{
-            //    _context.Entry(item).State = EntityState.Unchanged; // Ensure EF Core doesn't try to insert these
-            //}
-
+            Cart cart = new Cart { SelectedCartItems = selectedCartItems };      
+            
             // Create and add Order
             cart.SetTotalPrice();
             cart.UserId = user.Id;
