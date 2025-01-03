@@ -1,0 +1,19 @@
+﻿
+@model SelectedCartItem
+
+<div class="cart-item d-flex align-items-center" id="cart-item-@Model.ItemId">
+    <img src="@Url.Content("~/"+Model.ImageUrl)" alt="Product" class="product-image me-3">
+    <div class="flex-grow-1">
+        <h6 class="mb-1">@Model.Name</h6>
+        <p class="mb-1 text-muted">@Model.Description</p>
+    </div>
+    <div class="d-flex align-items-center">
+        <form id="quantity-form-@Model.ItemId">
+            <label for="quantity-@Model.ItemId">Quantity</label>
+            <input type="number" id="quantity-@Model.ItemId" min="0"
+                   name="quantity" value="@Model.SelectedQuantityByUser"
+                   data-id="@Model.ItemId" class="quantity-input form-control" />
+        </form>
+    </div>
+    <div class="ms-3 total-price" id="price-@Model.ItemId">$@Model.PriceWrtQuanity</div>
+</div>

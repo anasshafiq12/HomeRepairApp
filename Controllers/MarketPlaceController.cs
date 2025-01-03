@@ -25,7 +25,7 @@ namespace HouseRepairApp.Controllers
         [HttpPost]
         public IActionResult Index(string id)
         {
-            Console.WriteLine(id);
+           // Console.WriteLine(id);
             if (!HttpContext.Session.Keys.Contains("ids"))
             {
                 List<string> ids = new List<string> { id };
@@ -53,15 +53,23 @@ namespace HouseRepairApp.Controllers
             // If items already selected
             if(HttpContext.Session.Keys.Contains("items"))
             {
-                // string jsonitems = HttpContext.Session.GetString("items");
-                //List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
+                 string jsonitems = HttpContext.Session.GetString("items");
+                List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
+                List<string> CheckIds = new List<string>();
+                foreach(var item in cartItems)
+                {
+                    CheckIds.Add(item.ItemId.ToString());
+                }
                 string jsonIds = HttpContext.Session.GetString("ids");
                 List<string> idsList = JsonSerializer.Deserialize<List<string>>(jsonIds);
-                List<CartItem> cartItems = new List<CartItem>();
+             //   List<CartItem> cartItems = new List<CartItem>();
                 foreach (string id in idsList)
                 {
-                    CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
-                    cartItems.Add(item);
+                    if (!CheckIds.Contains(id))
+                    {
+                        CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
+                        cartItems.Add(item);
+                    }
                 }
                 string jsonItemsP = JsonSerializer.Serialize(cartItems);
                 HttpContext.Session.SetString("items", jsonItemsP);
@@ -146,7 +154,7 @@ namespace HouseRepairApp.Controllers
             Cart cart = new Cart { SelectedCartItems = selectedCartItems };
             if (quantity == 0)
             {
-                
+
                 selectedCartItems.RemoveAll(z => z.ItemId == id);
                 string jsonIds = HttpContext.Session.GetString("ids");
                 List<string> ids = JsonSerializer.Deserialize<List<string>>(jsonIds);
@@ -174,9 +182,10 @@ namespace HouseRepairApp.Controllers
                 cartItems.Add(item);
             }
             string jsonItems = JsonSerializer.Serialize(cartItems);
-            HttpContext.Session.SetString("items",jsonItems);
+            HttpContext.Session.SetString("items", jsonItems);
             return View(cart);
         }
+
         public IActionResult Order()
         {
             string jsonEmail = HttpContext.Session.GetString("email");
