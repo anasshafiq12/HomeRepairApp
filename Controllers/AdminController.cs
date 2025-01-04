@@ -1,20 +1,28 @@
 ﻿using HouseRepairApp.Data;
 using HouseRepairApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HouseRepairApp.Controllers
 {
-	public class AdminController : Controller
+    public class AdminController : Controller
 	{
         private readonly IWebHostEnvironment _environment;
 		private readonly ApplicationDbContext _context;
-        public AdminController(IWebHostEnvironment env, ApplicationDbContext context)
+        private readonly SignInManager<MyUser> _signInManager;
+        private readonly UserManager<MyUser> _userManager;
+        public AdminController(IWebHostEnvironment env, ApplicationDbContext context, SignInManager<MyUser> signInManager, UserManager<MyUser> userManager)
         {
             _context = context;
 			_environment = env;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
-		public IActionResult Home()
+		
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult Home()
 		{
 			return View();
 		}

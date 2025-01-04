@@ -21,12 +21,14 @@ namespace HouseRepairApp.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<MyUser> _signInManager;
+        private readonly UserManager<MyUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<MyUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<MyUser> signInManager, ILogger<LoginModel> logger, UserManager<MyUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -110,23 +112,37 @@ namespace HouseRepairApp.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                // Attempt to sign in the user
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-                // store user-email in session
+                // Store user-email in session
                 string json = System.Text.Json.JsonSerializer.Serialize(Input.Email);
                 HttpContext.Session.SetString("email", json);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    // Get the user by email
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (user != null)
+                    {
+                        // Check if the user is in the "Admin" role
+                        if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            _logger.LogInformation("Admin logged in.");
+                            return RedirectToAction("Home", "Admin"); // Redirect Admin to Admin Dashboard
+                        }
+                    }
+
+                    return LocalRedirect(returnUrl); // Redirect regular users
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
+
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
@@ -142,5 +158,6 @@ namespace HouseRepairApp.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }

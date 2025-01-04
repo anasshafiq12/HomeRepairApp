@@ -1,5 +1,6 @@
 ﻿using HouseRepairApp.Data;
 using HouseRepairApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -51,30 +52,72 @@ namespace HouseRepairApp.Controllers
         public IActionResult Cart()
         {
             // If items already selected
-            if(HttpContext.Session.Keys.Contains("items"))
+            if (User.Identity.IsAuthenticated)
             {
-                 string jsonitems = HttpContext.Session.GetString("items");
-                List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
-                List<string> CheckIds = new List<string>();
-                foreach(var item in cartItems)
+                if (HttpContext.Session.Keys.Contains("items"))
                 {
-                    CheckIds.Add(item.ItemId.ToString());
-                }
-                string jsonIds = HttpContext.Session.GetString("ids");
-                List<string> idsList = JsonSerializer.Deserialize<List<string>>(jsonIds);
-             //   List<CartItem> cartItems = new List<CartItem>();
-                foreach (string id in idsList)
-                {
-                    if (!CheckIds.Contains(id))
+                    string jsonitems = HttpContext.Session.GetString("items");
+                    List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonitems) ?? new List<CartItem>();
+                    List<string> CheckIds = new List<string>();
+                    foreach (var item in cartItems)
                     {
-                        CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
-                        cartItems.Add(item);
+                        CheckIds.Add(item.ItemId.ToString());
                     }
+                    string jsonIds = HttpContext.Session.GetString("ids");
+                    List<string> idsList = JsonSerializer.Deserialize<List<string>>(jsonIds);
+                    //   List<CartItem> cartItems = new List<CartItem>();
+                    foreach (string id in idsList)
+                    {
+                        if (!CheckIds.Contains(id))
+                        {
+                            CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
+                            cartItems.Add(item);
+                        }
+                    }
+                    string jsonItemsP = JsonSerializer.Serialize(cartItems);
+                    HttpContext.Session.SetString("items", jsonItemsP);
+                    List<SelectedCartItem> selectedCartItems1 = new List<SelectedCartItem>();
+                    foreach (var cartItem in cartItems)
+                    {
+                        SelectedCartItem item = new SelectedCartItem();
+                        item.ItemId = cartItem.ItemId;
+                        item.Name = cartItem.Name;
+                        item.Price = cartItem.Price;
+                        item.Description = cartItem.Description;
+                        item.Category = cartItem.Category;
+                        item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                        item.ImageUrl = cartItem.ImageUrl;
+                        item.AvailableQuantity = cartItem.AvailableQuantity;
+                        item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
+
+                        selectedCartItems1.Add(item);
+                    }
+                    Cart cartP = new Cart { SelectedCartItems = selectedCartItems1 };
+                    cartP.SetTotalPrice();
+                    if (HttpContext.Session.Keys.Contains("orderStatus"))
+                    {
+
+                        ViewBag.Status = "Order Placed"; // Pass TempData to the view via ViewBag
+
+                    }
+                    return View(cartP);
                 }
-                string jsonItemsP = JsonSerializer.Serialize(cartItems);
-                HttpContext.Session.SetString("items", jsonItemsP);
-                List<SelectedCartItem> selectedCartItems1 = new List<SelectedCartItem>();
-                foreach (var cartItem in cartItems)
+                // if items not already selected
+                string json = HttpContext.Session.GetString("ids");
+                if (string.IsNullOrEmpty(json))
+                    return RedirectToAction("Index", "MarketPlace");
+
+                List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
+                List<CartItem> items = new List<CartItem>();
+                foreach (string id in ids)
+                {
+                    CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
+                    items.Add(item);
+                }
+                string jsonItems = JsonSerializer.Serialize(items);
+                HttpContext.Session.SetString("items", jsonItems);
+                List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
+                foreach (var cartItem in items)
                 {
                     SelectedCartItem item = new SelectedCartItem();
                     item.ItemId = cartItem.ItemId;
@@ -84,108 +127,74 @@ namespace HouseRepairApp.Controllers
                     item.Category = cartItem.Category;
                     item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
                     item.ImageUrl = cartItem.ImageUrl;
-                    item.AvailableQuantity = cartItem.AvailableQuantity;
                     item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
-
-                    selectedCartItems1.Add(item);
+                    selectedCartItems.Add(item);
                 }
-                Cart cartP = new Cart { SelectedCartItems = selectedCartItems1 };
-                cartP.SetTotalPrice();
-                if (HttpContext.Session.Keys.Contains("orderStatus"))
-                {
-
-                    ViewBag.Status = "Order Placed"; // Pass TempData to the view via ViewBag
-
-                }
-                return View(cartP);
+                Cart cart = new Cart { SelectedCartItems = selectedCartItems };
+                cart.SetTotalPrice();
+                ViewBag.Status = TempData["Status"]; // Pass TempData to the view via ViewBag
+                return View(cart);
             }
-            // if items not already selected
-            string json = HttpContext.Session.GetString("ids");
-            if (string.IsNullOrEmpty(json))
-                return RedirectToAction("Index", "MarketPlace");
-
-            List<string> ids = JsonSerializer.Deserialize<List<string>>(json);
-            List<CartItem> items = new List<CartItem>();
-            foreach (string id in ids)
-            {
-                CartItem item = _context.CartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
-                items.Add(item);
-            }
-            string jsonItems = JsonSerializer.Serialize(items);
-            HttpContext.Session.SetString("items", jsonItems);
-            List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
-            foreach (var cartItem in items)
-            {
-                SelectedCartItem item = new SelectedCartItem();
-                item.ItemId = cartItem.ItemId;
-                item.Name = cartItem.Name;
-                item.Price = cartItem.Price;
-                item.Description = cartItem.Description;
-                item.Category = cartItem.Category;
-                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
-                item.ImageUrl = cartItem.ImageUrl;
-                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
-                selectedCartItems.Add(item);
-            }
-            Cart cart = new Cart { SelectedCartItems = selectedCartItems };
-            cart.SetTotalPrice();
-			ViewBag.Status = TempData["Status"]; // Pass TempData to the view via ViewBag
-			return View(cart);
+            return Redirect("/Identity/Account/Login");
         }
         [HttpPost]
         //public IActionResult Cart(int id, int quantity)
         public IActionResult Cart([FromBody] UpdateQuantityRequest request)
         {
-            string json = HttpContext.Session.GetString("items");
-            List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
-            List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
-            foreach (var cartItem in items)
+            if (User.Identity.IsAuthenticated)
             {
-                SelectedCartItem item = new SelectedCartItem();
-                item.ItemId = cartItem.ItemId;
-                item.Name = cartItem.Name;
-                item.Price = cartItem.Price;
-                item.Description = cartItem.Description;
-                item.Category = cartItem.Category;
-                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
-                item.ImageUrl = cartItem.ImageUrl;
-                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
-                selectedCartItems.Add(item);
-            }
-            Cart cart = new Cart { SelectedCartItems = selectedCartItems };
-            if (request.Quantity == 0)
-            {
-
-                selectedCartItems.RemoveAll(z => z.ItemId == request.Id);
-                string jsonIds = HttpContext.Session.GetString("ids");
-                List<string> ids = JsonSerializer.Deserialize<List<string>>(jsonIds);
-                string productId = request.Id.ToString();
-                if (ids.Remove(productId))
+                string json = HttpContext.Session.GetString("items");
+                List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
+                List<SelectedCartItem> selectedCartItems = new List<SelectedCartItem>();
+                foreach (var cartItem in items)
                 {
-                    jsonIds = JsonSerializer.Serialize(ids);
-                    HttpContext.Session.SetString("ids", jsonIds);
+                    SelectedCartItem item = new SelectedCartItem();
+                    item.ItemId = cartItem.ItemId;
+                    item.Name = cartItem.Name;
+                    item.Price = cartItem.Price;
+                    item.Description = cartItem.Description;
+                    item.Category = cartItem.Category;
+                    item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                    item.ImageUrl = cartItem.ImageUrl;
+                    item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
+                    selectedCartItems.Add(item);
                 }
+                Cart cart = new Cart { SelectedCartItems = selectedCartItems };
+                if (request.Quantity == 0)
+                {
+
+                    selectedCartItems.RemoveAll(z => z.ItemId == request.Id);
+                    string jsonIds = HttpContext.Session.GetString("ids");
+                    List<string> ids = JsonSerializer.Deserialize<List<string>>(jsonIds);
+                    string productId = request.Id.ToString();
+                    if (ids.Remove(productId))
+                    {
+                        jsonIds = JsonSerializer.Serialize(ids);
+                        HttpContext.Session.SetString("ids", jsonIds);
+                    }
+                }
+                cart.SetItemPriceAndQuantity(request.Id, request.Quantity);
+                cart.SetTotalPrice();
+                List<CartItem> cartItems = new List<CartItem>();
+                foreach (var cartItem in selectedCartItems)
+                {
+                    CartItem item = new CartItem();
+                    item.ItemId = cartItem.ItemId;
+                    item.Name = cartItem.Name;
+                    item.Price = cartItem.Price;
+                    item.Description = cartItem.Description;
+                    item.Category = cartItem.Category;
+                    item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
+                    item.ImageUrl = cartItem.ImageUrl;
+                    item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
+                    cartItems.Add(item);
+                }
+                string jsonItems = JsonSerializer.Serialize(cartItems);
+                HttpContext.Session.SetString("items", jsonItems);
+                //return View(cart);
+                return PartialView("_CartItemPartial", cart);
             }
-            cart.SetItemPriceAndQuantity(request.Id, request.Quantity);
-            cart.SetTotalPrice();
-            List<CartItem> cartItems = new List<CartItem>();
-            foreach (var cartItem in selectedCartItems)
-            {
-                CartItem item = new CartItem();
-                item.ItemId = cartItem.ItemId;
-                item.Name = cartItem.Name;
-                item.Price = cartItem.Price;
-                item.Description = cartItem.Description;
-                item.Category = cartItem.Category;
-                item.SelectedQuantityByUser = cartItem.SelectedQuantityByUser;
-                item.ImageUrl = cartItem.ImageUrl;
-                item.PriceWrtQuanity = cartItem.PriceWrtQuanity;
-                cartItems.Add(item);
-            }
-            string jsonItems = JsonSerializer.Serialize(cartItems);
-            HttpContext.Session.SetString("items", jsonItems);
-            //return View(cart);
-            return PartialView("_CartItemPartial", cart);
+            return Redirect("/Identity/Account/Login");
         }
 
         public IActionResult Order()
