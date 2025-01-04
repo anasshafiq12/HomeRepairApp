@@ -1,4 +1,55 @@
-﻿
+﻿@model Cart
+
+<div class="container my-5 cartbody">
+    <!-- Cart Items Section -->
+    <div id="cartItemsContainer">
+        @await Html.PartialAsync("_CartItemPartial", Model)
+    </div>
+</div>
+
+<!-- Anti-forgery token for AJAX requests -->
+<input type="hidden" name="__RequestVerificationToken" value="@((string)ViewData["RequestVerificationToken"])">
+
+<script>
+    // Function to initialize event listeners for quantity inputs
+    function initializeQuantityListeners() {
+        document.querySelectorAll('.update-quantity').forEach(input => {
+            input.addEventListener('change', function () {
+                const itemId = this.getAttribute('data-item-id');
+                const quantity = this.value;
+
+                fetch('/MarketPlace/Cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ id: itemId, quantity: quantity })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        document.getElementById('cartItemsContainer').innerHTML = html;
+                        initializeQuantityListeners(); // Reinitialize event listeners after DOM update
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    }
+
+    // Initialize listeners on page load
+    document.addEventListener('DOMContentLoaded', initializeQuantityListeners);
+</script>
+
+
+
+
+
+@* 
 
 
 
@@ -62,4 +113,4 @@
 
 
 
-</script>
+</script> *@

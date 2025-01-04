@@ -133,7 +133,8 @@ namespace HouseRepairApp.Controllers
 			return View(cart);
         }
         [HttpPost]
-        public IActionResult Cart(int id, int quantity)
+        //public IActionResult Cart(int id, int quantity)
+        public IActionResult Cart([FromBody] UpdateQuantityRequest request)
         {
             string json = HttpContext.Session.GetString("items");
             List<CartItem> items = JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
@@ -152,20 +153,20 @@ namespace HouseRepairApp.Controllers
                 selectedCartItems.Add(item);
             }
             Cart cart = new Cart { SelectedCartItems = selectedCartItems };
-            if (quantity == 0)
+            if (request.Quantity == 0)
             {
 
-                selectedCartItems.RemoveAll(z => z.ItemId == id);
+                selectedCartItems.RemoveAll(z => z.ItemId == request.Id);
                 string jsonIds = HttpContext.Session.GetString("ids");
                 List<string> ids = JsonSerializer.Deserialize<List<string>>(jsonIds);
-                string productId = id.ToString();
+                string productId = request.Id.ToString();
                 if (ids.Remove(productId))
                 {
                     jsonIds = JsonSerializer.Serialize(ids);
                     HttpContext.Session.SetString("ids", jsonIds);
                 }
             }
-            cart.SetItemPriceAndQuantity(id, quantity);
+            cart.SetItemPriceAndQuantity(request.Id, request.Quantity);
             cart.SetTotalPrice();
             List<CartItem> cartItems = new List<CartItem>();
             foreach (var cartItem in selectedCartItems)
@@ -183,7 +184,8 @@ namespace HouseRepairApp.Controllers
             }
             string jsonItems = JsonSerializer.Serialize(cartItems);
             HttpContext.Session.SetString("items", jsonItems);
-            return View(cart);
+            //return View(cart);
+            return PartialView("_CartItemPartial", cart);
         }
 
         public IActionResult Order()
