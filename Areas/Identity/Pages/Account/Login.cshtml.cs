@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using HouseRepairApp.Models;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
 
 namespace HouseRepairApp.Areas.Identity.Pages.Account
 {
@@ -134,7 +135,6 @@ namespace HouseRepairApp.Areas.Identity.Pages.Account
                             return RedirectToAction("Home", "Admin"); // Redirect Admin to Admin Dashboard
                         }
                     }
-
                     return LocalRedirect(returnUrl); // Redirect regular users
                 }
 
