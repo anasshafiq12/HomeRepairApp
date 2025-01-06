@@ -1,0 +1,62 @@
+﻿@model CartItem
+    <style>
+        .product-image {
+          max-width: 100%;
+          border-radius: 5px;
+        }
+        .best-seller {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          background: #ffc107;
+          padding: 5px 10px;
+          font-size: 14px;
+          font-weight: bold;
+          border-radius: 5px;
+        }
+        .product-info {
+          margin-top: 20px;
+        }
+        .price {
+          font-size: 24px;
+          color: #4caf50;
+          font-weight: bold;
+        }
+        .btn-add-to-basket {
+          width: 100%;
+        }
+        .small-text {
+          font-size: 14px;
+          color: #6c757d;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Product Image Section -->
+            <div class="col-md-6 position-relative">
+                <span class="best-seller">Best Seller</span>
+            <img src="@Url.Content("~/"+Model.ImageUrl)" alt="Product" class="product-image me-3">
+        </div>
+
+            <!-- Product Details Section -->
+            <div class="col-md-6">
+                <h1 class="h4">@Model.Name</h1>
+                <p class="small-text">Take him for a spin</p>
+                <p class="price">$@Model.Price</p>
+                <p><b>Only @Model.AvailableQuantity left!</b></p>
+                <p>Expected delivery: <b>Thu, 09.03 – Fri, 10.03</b></p>
+                <button class="btn btn-green btn-lg btn-add-to-basket">Add to Basket</button>
+
+                <hr>
+                <ul class="list-unstyled small-text">
+                    <li>✅ We can wrap this. Select at basket.</li>
+                    <li>✅ Free Delivery on Orders over £50</li>
+                    <li>✅ Free Returns</li>
+                    <li>✅ Secure Payment</li>
+                </ul>
+
+                <p class="text-muted small-text mt-2">Rating: 4.44 / 5.00 on REVIEWS.io</p>
+            </div>
+        </div>
+    </div>

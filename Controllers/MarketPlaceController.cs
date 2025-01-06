@@ -197,6 +197,17 @@ namespace HouseRepairApp.Controllers
             return Redirect("/Identity/Account/Login");
         }
 
+        [HttpPost]
+        public IActionResult ViewDetails(string id)
+        {
+            string jsonItems = HttpContext.Session.GetString("cartItems");
+            List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(jsonItems);
+
+            CartItem cartItem = cartItems.FirstOrDefault(z => z.ItemId == int.Parse(id));
+            if (cartItem != null) 
+                return View(cartItem);
+            return RedirectToAction("Index");
+        }
         public IActionResult Order()
         {
             string jsonEmail = HttpContext.Session.GetString("email");

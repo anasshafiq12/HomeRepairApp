@@ -2,6 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Applainces</title>
+    <style>
+        .card {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -9,7 +14,7 @@
             <h3 class="text-center text-success fw-bold top">Applainces</h3>
             <h2 class="text-center fw-bold mb-4 text-blue top">Slightly used certified applainces you can trust.</h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-                @foreach (var item in Model)
+                @* @foreach (var item in Model)
                 {
                     <div class="col">
                         <div class="card pricing-card rounded-0">
@@ -25,9 +30,38 @@
                             </div>
                         </div>
                     </div>
+                } *@
+
+                @foreach (var item in Model)
+                {
+                    <div class="col">
+                        <form asp-action="ViewDetails" asp-controller="MarketPlace" method="post" class="card-form">
+                            <input type="hidden" name="id" value="@item.ItemId" />
+                            <div class="card pricing-card rounded-0" onclick="submitCardForm(this)">
+                                <img src="@Url.Content("~/" + item.ImageUrl)" class="card-img-top" alt="Master Texture Finish">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">Name: @item.Name</h5>
+                                    <p class="text-center card-features">Description: @item.Description</p>
+                                    <p class="card-price fw-bold">Price: $@item.Price</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 }
+
             </div>
         </div>
     </div>
 </body>
+
 </html>
+
+<script>
+    function submitCardForm(cardElement) {
+        // Find the closest form for the clicked card
+        const form = cardElement.closest("form");
+        if (form) {
+            form.submit();
+        }
+    }
+</script>
