@@ -46,7 +46,21 @@
                 <p class="price">$@Model.Price</p>
                 <p><b>Only @Model.AvailableQuantity left!</b></p>
                 <p>Expected delivery: <b>Thu, 09.03 – Fri, 10.03</b></p>
-                <button class="btn btn-green btn-lg btn-add-to-basket">Add to Basket</button>
+                <form asp-action="AddItem" asp-controller="MarketPlace" method="post">
+                    <input type="hidden" name="id" value="@Model.ItemId" />
+                    @if(TempData["added"] == null)
+                    {
+                        <button type="submit" class="btn btn-green btn-lg btn-add-to-basket">Add to Basket</button>
+                    }
+                    else
+                    {
+                    <div class="alert alert-success mt-2">
+                        @TempData["added"]
+                    </div>
+                }
+
+                </form>
+
 
                 <hr>
                 <ul class="list-unstyled small-text">
