@@ -28,7 +28,7 @@ Restore NuGet Packages: Visual Studio should automatically restore the necessary
     Run the Application: Press F5 or click on the Start button in Visual Studio to run the application.
 
 --How It Works
-Upon launching the application, users can register or log in to their accounts. Authenticated users can browse through a list of available home repair services, view detailed information, and book appointments. The application provides a user-friendly interface to manage bookings and view service history.
+Upon launching the application, users can register or log in to their accounts. Authenticated users can browse through a list of available home repair services, view detailed information, buy home applainces (e.g AC,Refrigrator,Oven etc) and book appointments. The application provides a user-friendly interface to manage bookings and view service history.
 
 --Future Enhancements
     Service Provider Dashboard: Implement a dashboard for service providers to manage their services and view bookings.
