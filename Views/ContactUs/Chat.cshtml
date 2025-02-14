@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Increment Counter</p>
+</div>
+
+<div class="container">
+    <div class="row p-1">
+        <div class="col-2">Username</div>
+        <div class="col-4"><input type="text" id="usernameInput" /></div>
+        <div class="col-2">
+            <button id="registerBtn">Register</button>
+        </div>
+    </div>
+
+
+    <div class="row p-1">
+        <div class="col-6 text-end">
+            <button id="incrementBtn" disabled>Increment Counter</button>
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-6">
+            <hr />
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-6">
+            <ul id="incrementList"></ul>
+        </div>
+    </div>
+</div>
+<script src="~/js/chat.js"></script>

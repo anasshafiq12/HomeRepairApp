@@ -22,7 +22,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                             <div class="mb-3 d-flex flex-wrap gap-3">
                                 <div class="flex-grow-1">
-                                    <input asp-for="Input.Name" class="form-control" autocomplete="username" aria-required="true" placeholder="Name" />
+                                    <input asp-for="Input.Name" class="form-control" id="usernameInput" autocomplete="username" aria-required="true" placeholder="Name" />
                                     <label asp-for="Input.Name">Name</label>
                                     <span asp-validation-for="Input.Name" class="text-danger"></span>
                                 </div>
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                <input asp-for="Input.Email" id="emailInput" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                                 <label asp-for="Input.Email">Email</label>
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
@@ -67,6 +67,9 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/chat.js" asp-append-version="true"></script>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

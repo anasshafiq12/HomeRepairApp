@@ -19,6 +19,11 @@ namespace HouseRepairApp.Controllers
 		{
 			return View();
 		}
+		public IActionResult Chat()
+		{
+
+			return View();
+		}
 		[HttpPost]
 		public IActionResult Booking(Booking booking)
 		{

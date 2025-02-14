@@ -70,7 +70,7 @@
                     </ul>
 
                     <form class="d-flex flex-wrap align-items-center">
-                        <a class="btn btn-green text-white border rounded-0" href="/ContactUs/Booking">Book Now!</a>
+                        <a class="btn btn-green text-white border rounded-0" id="navBook" href="/ContactUs/Booking">Book Now!</a>
                         <i class="fas fa-magnifying-glass px-2"></i>
                         <input class="form-control search-bar me-2 border-0 rounded-0 w-auto" type="search" placeholder="Search" aria-label="Search">
                         <a href="/MarketPlace/Cart" class="me-2 text-black"><i class="fas fa-cart-shopping"></i></a>
@@ -164,7 +164,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     <script src="~/lib/microsoft//signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
@@ -194,6 +196,9 @@
             });
         });
 
+
+     var currentUserEmail = "@User.Identity?.Name";
+       
     </script>
 </body>
 </html>

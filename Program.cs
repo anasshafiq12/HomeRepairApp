@@ -27,6 +27,20 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
+builder.Services.AddHttpContextAccessor();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("https://localhost:59162") // Frontend URL
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
+
 
 var app = builder.Build();
 
@@ -53,6 +67,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
+
+
+
+app.UseCors();  // Add this before app.UseAuthorization();
+app.UseAuthorization();
 
 app.UseAuthorization();
 
