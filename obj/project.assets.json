@@ -8367,11 +8367,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\HouseRepairApp.csproj",
+      "projectUniqueName": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\HouseRepairApp.csproj",
       "projectName": "HouseRepairApp",
-      "projectPath": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\HouseRepairApp.csproj",
+      "projectPath": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\HouseRepairApp.csproj",
       "packagesPath": "C:\\Users\\KK ENTERPRISES\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KK ENTERPRISES\\Documents\\WebH\\obj\\",
+      "outputPath": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KK ENTERPRISES\\AppData\\Roaming\\NuGet\\NuGet.Config",
