@@ -17,7 +17,9 @@ namespace HouseRepairApp.Controllers
 		}
 		public IActionResult Booking()
 		{
-			return View();
+			if(!User.Identity.IsAuthenticated)
+                return Redirect("/Identity/Account/Login");
+            return View();
 		}
 		public IActionResult Chat()
 		{

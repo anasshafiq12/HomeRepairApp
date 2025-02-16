@@ -1,8 +1,4 @@
-﻿using HouseRepairApp.Data;
-using HouseRepairApp.Models;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
 using System.Security.Claims;
 
@@ -19,35 +15,47 @@ namespace HouseRepairApp.Hubs
             _httpContextAccessor = httpContextAccessor;
         }
 
+        // Store user's connection and email
         public async Task SetConnection()
         {
             var email = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (!string.IsNullOrEmpty(email))
             {
                 Users[Context.ConnectionId] = email;
+                await Clients.All.SendAsync("UserConnected", email);
             }
         }
-        public async Task ConfirmBooking(Booking booking)
+
+        // Send message to all clients
+        public async Task SendMessageByUser(string message)
         {
-            var connectionID = Users.FirstOrDefault(u => u.Value == "admin").Key;
-            if (connectionID != null)
-                await Clients.Client(connectionID).SendAsync("ReceiveBooking", booking);
+            var senderEmail = Users.ContainsKey(Context.ConnectionId) ? Users[Context.ConnectionId] : "Unknown";
+            //    await Clients.All.SendAsync("ReceiveMessage", senderEmail, message);
+            Console.WriteLine($"dj {message}");
+            await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", message);
+        //    await Clients.Clients(Users["anas@admin.com"]).SendAsync("ReceiveUserMessage", Context.ConnectionId,message);
         }
+
+        // Send private message to a specific user
         public async Task SendMessageToUser(string email, string message)
         {
-            var senderUsername = Users[Context.ConnectionId];
-            if (senderUsername == "admin")
-                senderUsername = "Technician";
+            var senderEmail = Users.ContainsKey(Context.ConnectionId) ? Users[Context.ConnectionId] : "Unknown";
             var connectionId = Users.FirstOrDefault(u => u.Value == email).Key;
-            if (connectionId != null)
-                await Clients.Client(connectionId).SendAsync("ReceiveMessage", senderUsername, message);
+
+            if (!string.IsNullOrEmpty(connectionId))
+            {
+                await Clients.Client(connectionId).SendAsync("ReceiveMessage", senderEmail, message);
+            }
         }
+
+        // Handle user disconnection
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            Users.TryRemove(Context.ConnectionId, out _);
-            base.OnDisconnectedAsync(exception);
+            if (Users.TryRemove(Context.ConnectionId, out var email))
+            {
+                await Clients.All.SendAsync("UserDisconnected", email);
+            }
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }
-
-
