@@ -127,6 +127,9 @@ namespace HouseRepairApp.Controllers
 			return RedirectToAction("OrdersList","Admin");
 		}
 
-
+		public IActionResult ChatWithCustomer()
+		{
+			return View();
+		}
     }
 }

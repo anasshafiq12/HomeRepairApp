@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\images\\booking.jpg"
     },
     {
+      "Id": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\wwwroot\\images\\bot.jpg",
+      "PackagePath": "staticwebassets\\images\\bot.jpg"
+    },
+    {
       "Id": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\wwwroot\\images\\elecplugs.jpg",
       "PackagePath": "staticwebassets\\images\\elecplugs.jpg"
     },

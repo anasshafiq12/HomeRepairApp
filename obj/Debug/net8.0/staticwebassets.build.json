@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IqBMidKxOC0lbLyGjIW4aNA015WrWf+R88E+2Kg2dck=",
+  "Hash": "PpNJvh9qJpUnEWyQojlTpfOy5AQ0k4EJmqMhJIr7G7A=",
   "Source": "HouseRepairApp",
   "BasePath": "_content/HouseRepairApp",
   "Mode": "Default",
@@ -1269,6 +1269,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\booking.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\wwwroot\\images\\bot.jpg",
+      "SourceId": "HouseRepairApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\wwwroot\\",
+      "BasePath": "_content/HouseRepairApp",
+      "RelativePath": "images/bot.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bot.jpg"
     },
     {
       "Identity": "C:\\Users\\KK ENTERPRISES\\Documents\\GitHub\\HomeRepairApp\\wwwroot\\images\\elecplugs.jpg",

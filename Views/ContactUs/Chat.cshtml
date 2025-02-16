@@ -1,36 +1,188 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumbing Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #28a745;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Increment Counter</p>
-</div>
+            .chat-button:hover {
+                transform: scale(1.1);
+            }
 
-<div class="container">
-    <div class="row p-1">
-        <div class="col-2">Username</div>
-        <div class="col-4"><input type="text" id="usernameInput" /></div>
-        <div class="col-2">
-            <button id="registerBtn">Register</button>
+        .chat-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Chat popup styles */
+        .chat-popup {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            z-index: 999;
+            display: none;
+            overflow: hidden;
+        }
+
+            .chat-popup.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+        .chat-header {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            margin-bottom: 15px;
+        }
+
+            .message.received {
+                margin-right: auto;
+            }
+
+            .message.sent {
+                margin-left: auto;
+            }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 15px;
+        }
+
+        .received .message-content {
+            background: #f1f1f1;
+        }
+
+        .sent .message-content {
+            background: #28a745;
+            color: white;
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #dee2e6;
+            background: white;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Custom scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+            .chat-messages::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+    </style>
+</head>
+<body>
+    <!-- Your existing content -->
+    <div class="container-fluid hero-section">
+        <!-- ... existing hero section code ... -->
+    </div>
+
+    <button class="chat-button" id="chatButton" title="Chat with Technician">
+        <svg class="chat-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </button>
+
+    <div class="chat-popup" id="chatPopup">
+        <div class="chat-header">
+            <div class="d-flex align-items-center">
+                <img src="https://placehold.co/40" class="chat-avatar me-3" alt="Technician">
+                <div>
+                    <h6 class="mb-0">Technical Support</h6>
+                    <small class="text-muted">Online</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-messages">
+            <div class="message received">
+                <div class="message-content">
+                    <p class="mb-0">Hello! How can I assist you with your plumbing needs today?</p>
+                </div>
+                <small class="text-muted">12:03 PM</small>
+            </div>
+
+            <div class="message sent">
+                <div class="message-content">
+                    <p class="mb-0">Hi! I'm having issues with my kitchen sink.</p>
+                </div>
+                <small class="text-muted">12:04 PM</small>
+            </div>
+
+            <div class="message received">
+                <div class="message-content">
+                    <p class="mb-0">I'm sorry to hear that. Could you describe the problem in more detail?</p>
+                </div>
+                <small class="text-muted">12:05 PM</small>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Type your message...">
+                <button class="btn btn-success">Send</button>
+            </div>
         </div>
     </div>
 
-
-    <div class="row p-1">
-        <div class="col-6 text-end">
-            <button id="incrementBtn" disabled>Increment Counter</button>
-        </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-6">
-            <hr />
-        </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-6">
-            <ul id="incrementList"></ul>
-        </div>
-    </div>
-</div>
-<script src="~/js/chat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('chatButton').addEventListener('click', function () {
+            const popup = document.getElementById('chatPopup');
+            popup.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

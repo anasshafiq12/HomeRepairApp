@@ -27,14 +27,14 @@ document.addEventListener("click", function () {
     });
 });
 
-//document.getElementById("sendButton").addEventListener("click", function (event) {
-//    var targetUser = document.getElementById("userInput").value;
-//    var message = document.getElementById("messageInput").value;
-//    connection.invoke("SendMessageToUser", targetUser, message).catch(function (err) {
-//        console.error("Failed to send message:", err.toString());
-//    });
-//    event.preventDefault();
-//});
+document.getElementById("sendBookingBtn").addEventListener("click", function (event) {
+    var targetUser = document.getElementById("userInput").value;
+    var message = document.getElementById("messageInput").value;
+    connection.invoke("SendMessageToUser", targetUser, message).catch(function (err) {
+        console.error("Failed to send message:", err.toString());
+    });
+    event.preventDefault();
+});
 
 //connection.onclose(async () => {
 //    console.error("Connection lost, attempting to reconnect...");
