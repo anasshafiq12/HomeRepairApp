@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <style>
+        .chat-container {
+            max-width: 1200px;
+            height: 90vh;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            height: 100%;
+        }
+
+        .chat-item {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .chat-item:hover {
+                background: #f1f1f1;
+            }
+
+        .chat-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .chat-main {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 60vh;
+            padding: 20px;
+        }
+
+        .message {
+            max-width: 70%;
+            margin-bottom: 20px;
+        }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 15px;
+        }
+
+        .received .message-content {
+            background: #f1f1f1;
+        }
+
+        .sent .message-content {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="chat-container">
+            <div class="row h-100 g-0">
+                <!-- Sidebar Section -->
+                <div class="col-md-4 sidebar">
+                    <div class="p-3">
+                        <!-- Categories -->
+                        <div class="mb-4">
+                            <div class="chat-item" onclick="openChat('Customer Care', 'Having trouble? Chat with our team')">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Customer Care">
+                                    <div>
+                                        <h6 class="mb-1">Customer Care</h6>
+                                        <small class="text-muted">Having trouble? Chat with our team</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8" id="chatSection">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    connection.start().then(function () {
+        console.log("Connection started at admin");
+        connection.invoke("SetConnection").catch(function (err) {
+            console.error("Failed to set connection:", err.toString());
+        });
+    }).catch(function (err) {
+        console.error("Connection failed at admin:", err.toString());
+    });
+
+    function openChat(name, description) {
+        fetch(`/Chat/LoadChat?name=${encodeURIComponent(name)}&desc=${encodeURIComponent(description)}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("chatSection").innerHTML = html;
+            });
+    }
+</script>

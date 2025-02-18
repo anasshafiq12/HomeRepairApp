@@ -1,136 +1,94 @@
-﻿@{
+﻿@*  @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <head>
     <style>
         .chat-container {
-            max-width: 1200px;
-            height: 90vh;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            overflow: hidden;
+        max-width: 1200px;
+        height: 90vh;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        overflow: hidden;
         }
         .sidebar {
-            background: #f8f9fa;
-            border-right: 1px solid #dee2e6;
-            height: 100%;
+        background: #f8f9fa;
+        border-right: 1px solid #dee2e6;
+        height: 100%;
         }
         .chat-item {
-            padding: 15px;
-            border-bottom: 1px solid #dee2e6;
-            cursor: pointer;
-            transition: background 0.3s;
+        padding: 15px;
+        border-bottom: 1px solid #dee2e6;
+        cursor: pointer;
+        transition: background 0.3s;
         }
         .chat-item:hover {
-            background: #f1f1f1;
+        background: #f1f1f1;
         }
         .chat-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
         }
         .chat-main {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
         }
         .chat-header {
-            padding: 20px;
-            border-bottom: 1px solid #dee2e6;
+        padding: 20px;
+        border-bottom: 1px solid #dee2e6;
         }
         .chat-messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            max-height: 60vh;
-            padding: 20px;
+        flex-grow: 1;
+        overflow-y: auto;
+        max-height: 60vh;
+        padding: 20px;
         }
         .message {
-            max-width: 70%;
-            margin-bottom: 20px;
+        max-width: 70%;
+        margin-bottom: 20px;
         }
         .message-content {
-            padding: 10px 15px;
-            border-radius: 15px;
+        padding: 10px 15px;
+        border-radius: 15px;
         }
         .received .message-content {
-            background: #f1f1f1;
+        background: #f1f1f1;
         }
         .sent .message-content {
-            background: #6c5ce7;
-            color: white;
+        background: #6c5ce7;
+        color: white;
         }
         .chat-input {
-            padding: 20px;
-            border-top: 1px solid #dee2e6;
+        padding: 20px;
+        border-top: 1px solid #dee2e6;
         }
 
         .chat-messages::-webkit-scrollbar {
-            width: 6px;
+        width: 6px;
         }
 
         .chat-messages::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        background: #f1f1f1;
         }
 
         .chat-messages::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 3px;
+        background: #888;
+        border-radius: 3px;
         }
 
-            .chat-messages::-webkit-scrollbar-thumb:hover {
-                background: #555;
-            }
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        }
     </style>
-</head>g
-<body class="bg-light">
-    <div class="container py-4">
-        <div class="chat-container">
-            <div class="row h-100 g-0">
-                <!-- Sidebar -->
-                <div class="col-md-4 sidebar">
-                    <div class="p-3">
-                        <h5 class="mb-4">Chat with League</h5>
+</head>
+@{
+    Layout = "~/Views/Shared/_ChatLayout.cshtml";
+}
 
-                        <!-- Categories -->
-                        <div class="mb-4">
-                            <div class="chat-item">
-                                <div class="d-flex align-items-center">
-                                    <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Customer Care">
-                                    <div>
-                                        <h6 class="mb-1">Customer Care</h6>
-                                        <small class="text-muted">Having trouble? Chat with our team</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="chat-item">
-                                <div class="d-flex align-items-center">
-                                    <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Health Concierge">
-                                    <div>
-                                        <h6 class="mb-1">Health Concierge</h6>
-                                        <small class="text-muted">Chat with health professionals</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Providers -->
-                        <h6 class="mb-3">Chat with your providers</h6>
-                        <div class="chat-item">
-                            <div class="d-flex align-items-center">
-                                <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Amy">
-                                <div>
-                                    <h6 class="mb-1">Amy</h6>
-                                    <small class="text-muted">Personal trainer</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Chat Area -->
+<!-- Main Chat Area -->
                 <div class="col-md-8">
                     <div class="chat-main">
                         <!-- Chat Header -->
@@ -145,31 +103,8 @@
                         </div>
 
                         <!-- Chat Messages -->
-                        <div class="chat-messages">
-                            <div class="message received">
-                                <div class="message-content">
-                                    <p class="mb-0">Hello! My name is Sarah. How can I help you today?</p>
-                                </div>
-                                <small class="text-muted">12:03pm</small>
-                            </div>
-                            <div class="message received">
-                                <div class="message-content">
-                                    <p class="mb-0">Hello! My name is Sarah. How can I help you today?</p>
-                                </div>
-                                <small class="text-muted">12:03pm</small>
-                            </div>
-                            <div class="message received">
-                                <div class="message-content">
-                                    <p class="mb-0">Hello! My name is Sarah. How can I help you today?</p>
-                                </div>
-                                <small class="text-muted">12:03pm</small>
-                            </div>
-                            <div class="message received">
-                                <div class="message-content">
-                                    <p class="mb-0">Hello! My name is Sarah. How can I help you today?</p>
-                                </div>
-                                <small class="text-muted">12:03pm</small>
-                            </div>
+                        <div class="chat-messages" id="chatMessages">
+
                             <div class="message received">
                                 <div class="message-content">
                                     <p class="mb-0">Hello! My name is Sarah. How can I help you today?</p>
@@ -193,8 +128,209 @@
                         </div>
                     </div>
                 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    connection.start().then(function () {
+        console.log("Connection started at admin");
+         connection.invoke("SetConnection").catch(function (err) {
+                console.error("Failed to set connection:", err.toString());
+            });
+    }).catch(function (err) {
+        console.error("Connection failed at admin:", err.toString());
+    });
+
+
+    function addMessageAtAdmin(text, type) {
+        let chatMessages = document.getElementById("chatMessages");
+
+        let messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", type);
+
+        let contentDiv = document.createElement("div");
+        contentDiv.classList.add("message-content");
+        if (type === "received") {
+            contentDiv.classList.add("text-black");
+        }
+
+        let p = document.createElement("p");
+        p.classList.add("mb-0");
+        p.textContent = text;
+
+        let timeStamp = document.createElement("small");
+        timeStamp.classList.add("text-muted");
+        timeStamp.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        contentDiv.appendChild(p);
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(timeStamp);
+        chatMessages.appendChild(messageDiv);
+
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+    }
+
+    function receiveMessage(text) {
+        addMessageAtAdmin(text, "received");
+    }
+    function sendMessage(text) {
+        addMessageAtAdmin(text, "sent");
+    }
+    connection.on("ReceiveMessageAtAdmin", function (message) {
+        receiveMessage(message);
+    });
+
+</script>  *@
+
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <style>
+        .chat-container {
+            max-width: 1200px;
+            height: 90vh;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            height: 100%;
+        }
+
+        .chat-item {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .chat-item:hover {
+                background: #f1f1f1;
+            }
+
+        .chat-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .chat-main {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 60vh;
+            padding: 20px;
+        }
+
+        .message {
+            max-width: 70%;
+            margin-bottom: 20px;
+        }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 15px;
+        }
+
+        .received .message-content {
+            background: #f1f1f1;
+        }
+
+        .sent .message-content {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="chat-container">
+            <div class="row h-100 g-0">
+                <!-- Sidebar Section -->
+                <div class="col-md-4 sidebar">
+                    <div class="p-3">
+                        <!-- Categories -->
+                        <div class="mb-4">
+                            <div class="chat-item" onclick="openChat('Customer Care', 'Having trouble? Chat with our team')">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Customer Care">
+                                    <div>
+                                        <h6 class="mb-1">Customer Care</h6>
+                                        <small class="text-muted">Having trouble? Chat with our team</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8" id="chatSection">
+                    <div class="chat-main">
+                        <div class="chat-header">
+                            <h6 class="mb-0">Select a chat to start messaging</h6>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    connection.start().then(function () {
+        console.log("Connection started at admin");
+        connection.invoke("SetConnection").catch(function (err) {
+            console.error("Failed to set connection:", err.toString());
+        });
+    }).catch(function (err) {
+        console.error("Connection failed at admin:", err.toString());
+    });
+
+    function openChat(name, description) {
+        document.getElementById("chatSection").innerHTML = `
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <div class="d-flex align-items-center">
+                            <img src="https://placehold.co/45" class="chat-avatar me-3" alt="${name}">
+                            <div>
+                                <h6 class="mb-0">${name}</h6>
+                                <small class="text-muted">${description}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Write a message...">
+                            <button class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>`;
+    }
+</script>

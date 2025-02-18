@@ -31,21 +31,16 @@ namespace HouseRepairApp.Hubs
         {
             var senderEmail = Users.ContainsKey(Context.ConnectionId) ? Users[Context.ConnectionId] : "Unknown";
             //    await Clients.All.SendAsync("ReceiveMessage", senderEmail, message);
-            Console.WriteLine($"dj {message}");
             await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", message);
-        //    await Clients.Clients(Users["anas@admin.com"]).SendAsync("ReceiveUserMessage", Context.ConnectionId,message);
+            var key = Users.FirstOrDefault(u => u.Value == "anas@admin.com").Key;
+            Console.Write("key"+key);
+            await Clients.Clients(key).SendAsync("ReceiveMessageAtAdmin", message);
         }
 
         // Send private message to a specific user
-        public async Task SendMessageToUser(string email, string message)
+        public async Task SendMessageToUser(string message)
         {
-            var senderEmail = Users.ContainsKey(Context.ConnectionId) ? Users[Context.ConnectionId] : "Unknown";
-            var connectionId = Users.FirstOrDefault(u => u.Value == email).Key;
-
-            if (!string.IsNullOrEmpty(connectionId))
-            {
-                await Clients.Client(connectionId).SendAsync("ReceiveMessage", senderEmail, message);
-            }
+           
         }
 
         // Handle user disconnection
