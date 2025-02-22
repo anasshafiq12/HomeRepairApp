@@ -1,188 +1,6 @@
-﻿@*  @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
-
-<head>
-    <style>
-        .chat-container {
-        max-width: 1200px;
-        height: 90vh;
-        background: #fff;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        overflow: hidden;
-        }
-        .sidebar {
-        background: #f8f9fa;
-        border-right: 1px solid #dee2e6;
-        height: 100%;
-        }
-        .chat-item {
-        padding: 15px;
-        border-bottom: 1px solid #dee2e6;
-        cursor: pointer;
-        transition: background 0.3s;
-        }
-        .chat-item:hover {
-        background: #f1f1f1;
-        }
-        .chat-avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        }
-        .chat-main {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        }
-        .chat-header {
-        padding: 20px;
-        border-bottom: 1px solid #dee2e6;
-        }
-        .chat-messages {
-        flex-grow: 1;
-        overflow-y: auto;
-        max-height: 60vh;
-        padding: 20px;
-        }
-        .message {
-        max-width: 70%;
-        margin-bottom: 20px;
-        }
-        .message-content {
-        padding: 10px 15px;
-        border-radius: 15px;
-        }
-        .received .message-content {
-        background: #f1f1f1;
-        }
-        .sent .message-content {
-        background: #6c5ce7;
-        color: white;
-        }
-        .chat-input {
-        padding: 20px;
-        border-top: 1px solid #dee2e6;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-        width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 3px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb:hover {
-        background: #555;
-        }
-    </style>
-</head>
-@{
-    Layout = "~/Views/Shared/_ChatLayout.cshtml";
-}
-
-<!-- Main Chat Area -->
-                <div class="col-md-8">
-                    <div class="chat-main">
-                        <!-- Chat Header -->
-                        <div class="chat-header">
-                            <div class="d-flex align-items-center">
-                                <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Sarah M">
-                                <div>
-                                    <h6 class="mb-0">Sarah M</h6>
-                                    <small class="text-muted">Online</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Chat Messages -->
-                        <div class="chat-messages" id="chatMessages">
-
-                            <div class="message received">
-                                <div class="message-content">
-                                    <p class="mb-0">Hello! My name is Sarah. How can I help you today?</p>
-                                </div>
-                                <small class="text-muted">12:03pm</small>
-                            </div>
-                            <div class="message sent">
-                                <div class="message-content">
-                                    <p class="mb-0">Just want to say you guys are doing a fantastic job! 👍</p>
-                                </div>
-                                <small class="text-muted">12:05pm</small>
-                            </div>
-                        </div>
-
-                        <!-- Chat Input -->
-                        <div class="chat-input">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Write a message...">
-                                <button class="btn btn-primary">Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-
-<script>
-    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-    connection.start().then(function () {
-        console.log("Connection started at admin");
-         connection.invoke("SetConnection").catch(function (err) {
-                console.error("Failed to set connection:", err.toString());
-            });
-    }).catch(function (err) {
-        console.error("Connection failed at admin:", err.toString());
-    });
-
-
-    function addMessageAtAdmin(text, type) {
-        let chatMessages = document.getElementById("chatMessages");
-
-        let messageDiv = document.createElement("div");
-        messageDiv.classList.add("message", type);
-
-        let contentDiv = document.createElement("div");
-        contentDiv.classList.add("message-content");
-        if (type === "received") {
-            contentDiv.classList.add("text-black");
-        }
-
-        let p = document.createElement("p");
-        p.classList.add("mb-0");
-        p.textContent = text;
-
-        let timeStamp = document.createElement("small");
-        timeStamp.classList.add("text-muted");
-        timeStamp.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-        contentDiv.appendChild(p);
-        messageDiv.appendChild(contentDiv);
-        messageDiv.appendChild(timeStamp);
-        chatMessages.appendChild(messageDiv);
-
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
-    }
-
-    function receiveMessage(text) {
-        addMessageAtAdmin(text, "received");
-    }
-    function sendMessage(text) {
-        addMessageAtAdmin(text, "sent");
-    }
-    connection.on("ReceiveMessageAtAdmin", function (message) {
-        receiveMessage(message);
-    });
-
-</script>  *@
-
+﻿@using System.Collections.Concurrent
+@using HouseRepairApp.Models
+@model ConcurrentDictionary<string, List<Message>>
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -190,19 +8,22 @@
 
 <head>
     <style>
+        /* Chat Container */
         .chat-container {
             max-width: 1200px;
             height: 90vh;
             background: #fff;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
+        /* Sidebar */
         .sidebar {
             background: #f8f9fa;
             border-right: 1px solid #dee2e6;
             height: 100%;
+            overflow-y: auto;
         }
 
         .chat-item {
@@ -212,9 +33,9 @@
             transition: background 0.3s;
         }
 
-            .chat-item:hover {
-                background: #f1f1f1;
-            }
+        .chat-item:hover {
+            background: #f1f1f1;
+        }
 
         .chat-avatar {
             width: 45px;
@@ -222,6 +43,7 @@
             border-radius: 50%;
         }
 
+        /* Chat Main Area */
         .chat-main {
             height: 100%;
             display: flex;
@@ -233,13 +55,37 @@
             border-bottom: 1px solid #dee2e6;
         }
 
+        /* Chat Messages Scrollbar */
         .chat-messages {
             flex-grow: 1;
             overflow-y: auto;
-            max-height: 60vh;
             padding: 20px;
+            background: #f9f9f9;
+            max-height: 70vh; /* Adjust height as needed */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #ccc #f9f9f9; /* For Firefox */
         }
 
+            /* Scrollbar for Webkit browsers */
+            .chat-messages::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .chat-messages::-webkit-scrollbar-track {
+                background: #f9f9f9;
+            }
+
+            .chat-messages::-webkit-scrollbar-thumb {
+                background-color: #ccc;
+                border-radius: 4px;
+            }
+
+                .chat-messages::-webkit-scrollbar-thumb:hover {
+                    background-color: #999;
+                }
+
+
+        /* Message Styles */
         .message {
             max-width: 70%;
             margin-bottom: 20px;
@@ -248,49 +94,76 @@
         .message-content {
             padding: 10px 15px;
             border-radius: 15px;
+            margin-bottom: 5px;
         }
 
         .received .message-content {
             background: #f1f1f1;
+            color: #333;
         }
 
         .sent .message-content {
-            background: #6c5ce7;
+            background: #28a745;
             color: white;
         }
 
+        /* Chat Input */
         .chat-input {
             padding: 20px;
             border-top: 1px solid #dee2e6;
         }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .chat-container {
+                height: 100vh;
+            }
+        }
     </style>
 </head>
+
 <body class="bg-light">
     <div class="container py-4">
         <div class="chat-container">
             <div class="row h-100 g-0">
                 <!-- Sidebar Section -->
-                <div class="col-md-4 sidebar">
+                <div class="col-md-4 sidebar" id="chatsSidebar">
                     <div class="p-3">
-                        <!-- Categories -->
-                        <div class="mb-4">
-                            <div class="chat-item" onclick="openChat('Customer Care', 'Having trouble? Chat with our team')">
-                                <div class="d-flex align-items-center">
-                                    <img src="https://placehold.co/45" class="chat-avatar me-3" alt="Customer Care">
-                                    <div>
-                                        <h6 class="mb-1">Customer Care</h6>
-                                        <small class="text-muted">Having trouble? Chat with our team</small>
+                        <h5>Chats</h5>
+                        <div id="sidebars">
+                            @if (Model == null || !Model.Any())
+                            {
+                                <p>No chats available</p>
+                            }
+                            else
+                            {
+                                @foreach (var userAndMessages in Model)
+                                {
+                                    var userName = userAndMessages.Key;
+                                    var messagesList = userAndMessages.Value ?? new List<Message>();
+                  
+                                    var messagesJson = Newtonsoft.Json.JsonConvert.SerializeObject(messagesList);
+                                    <div class="chat-item" data-messages='@Html.Raw(messagesJson)' onclick="openChat('@userName',this)">
+
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://placehold.co/45" class="chat-avatar me-3" alt="@userName">
+                                            <div>
+                                                <h6 class="mb-1">@userName</h6>
+                                                <small class="text-muted">Click to chat</small>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
 
+                <!-- Chat Section -->
                 <div class="col-md-8" id="chatSection">
                     <div class="chat-main">
                         <div class="chat-header">
-                            <h6 class="mb-0">Select a chat to start messaging</h6>
+                            <h6>Select a chat to start messaging</h6>
                         </div>
                     </div>
                 </div>
@@ -299,38 +172,98 @@
     </div>
 </body>
 
+<!-- SignalR Integration & Chat Functionality -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 <script>
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    let email = "";
 
     connection.start().then(function () {
-        console.log("Connection started at admin");
-        connection.invoke("SetConnection").catch(function (err) {
-            console.error("Failed to set connection:", err.toString());
+        console.log("Connected to SignalR");
+        connection.invoke("SetConnection").catch(console.error);
+    }).catch(console.error);
+
+    function openChat(userName,element) {
+        email = userName;
+        var messagesData = element.getAttribute('data-messages');
+        var messages = JSON.parse(messagesData);
+
+        document.getElementById("chatsSidebar").style.display = "none";
+        document.getElementById("chatSection").innerHTML = `
+            <div class="chat-main">
+                <div class="chat-header">
+                    <i class="bi bi-x-lg m-2" id="closeChat" onclick="closeChat()"></i>
+                    <h6>Chat with ${userName}</h6>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="messageInput" placeholder="Type your message...">
+                        <button class="btn btn-success" id="sendMessageFromAdmin">Send</button>
+                    </div>
+                </div>
+            </div>`;
+
+        messages.forEach(messageObj => {
+            if (messageObj.SenderEmail == userName)
+            {
+                messageObj.MessagesText.forEach(text => {
+                    if (messageObj.SenderEmail === "anas@admin.com") {
+                        sendMessageByme(text);
+                    } else {
+                        receiveMessageOfOther(text);
+                    }
+                });
+            }
         });
-    }).catch(function (err) {
-        console.error("Connection failed at admin:", err.toString());
+    }
+
+    function closeChat() {
+        document.getElementById("chatsSidebar").style.display = "block";
+        document.getElementById("chatSection").innerHTML = `
+            <div class="chat-main">
+                <div class="chat-header">
+                    <h6>Select a chat to start messaging</h6>
+                </div>
+            </div>`;
+    }
+
+    function addMessageAtAdmin(text, type) {
+        let chatMessages = document.getElementById("chatMessages");
+        let messageDiv = `<div class="message ${type}">
+            <div class="message-content">${text}</div>
+            <small class="text-muted">${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</small>
+        </div>`;
+        chatMessages.insertAdjacentHTML("beforeend", messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function receiveMessageOfOther(text) {
+        addMessageAtAdmin(text, "received");
+    }
+
+    function sendMessageByme(text) {
+        addMessageAtAdmin(text, "sent");
+    }
+
+    document.addEventListener("click", function (event) {
+        if (event.target.id === "sendMessageFromAdmin") {
+            let messageInput = document.getElementById("messageInput");
+            let messageText = messageInput.value.trim();
+            if (messageText) {
+                connection.invoke("SendMessageToUser", email, messageText).catch(console.error);
+                sendMessageByme(messageText);
+                messageInput.value = "";
+            }
+        }
     });
 
-    function openChat(name, description) {
-        document.getElementById("chatSection").innerHTML = `
-                <div class="chat-main">
-                    <div class="chat-header">
-                        <div class="d-flex align-items-center">
-                            <img src="https://placehold.co/45" class="chat-avatar me-3" alt="${name}">
-                            <div>
-                                <h6 class="mb-0">${name}</h6>
-                                <small class="text-muted">${description}</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="chat-input">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Write a message...">
-                            <button class="btn btn-primary">Send</button>
-                        </div>
-                    </div>
-                </div>`;
-    }
+    connection.on("ReceiveMessageAtAdmin", function (message) {
+        receiveMessageOfOther(message);
+    });
+
+
+    connection.on("MySentMessage", function (message) {
+        sendMessageByme(message);
+    })
 </script>

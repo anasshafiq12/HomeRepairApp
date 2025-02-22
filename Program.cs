@@ -28,7 +28,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddTransient<ChatHub>();
 
 builder.Services.AddCors(options =>
 {

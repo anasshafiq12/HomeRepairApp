@@ -27,6 +27,7 @@ namespace HouseRepairApp.Data
         public DbSet<CartItem> CartItems { get; set; } // table
         public DbSet<Cart> Carts { get; set; }
         public DbSet<SelectedCartItem> SelectedCartItems { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
     }
 }

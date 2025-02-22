@@ -130,6 +130,27 @@ namespace HouseRepairApp.Data.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("HouseRepairApp.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Messages")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserConnectionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("HouseRepairApp.Models.MyUser", b =>
                 {
                     b.Property<string>("Id")

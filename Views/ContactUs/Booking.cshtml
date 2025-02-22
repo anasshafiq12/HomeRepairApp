@@ -1,4 +1,7 @@
-﻿<style>
+﻿@using HouseRepairApp.Models
+@model List<Message>
+
+<style>
     .bluecol {
         background-color: #42c5f5;
     }
@@ -21,40 +24,40 @@
         transition: transform 0.3s ease;
     }
 
-        .chat-button:hover {
-            transform: scale(1.1);
-        }
+    .chat-button:hover {
+        transform: scale(1.1);
+    }
 
     .chat-icon {
         color: white;
         font-size: 24px;
     }
 
- /* Chat popup styles */
-.chat-popup {
-    width: 100%;
-    height: 600px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-    z-index: 999;
-    display: none;
-    overflow: hidden;
-}
-
-/* Adjustments for smaller screens */
-@@media (max-width: 480px) {
+    /* Chat popup styles */
     .chat-popup {
-        right: 10px;
-        width: calc(100% - 20px);
-        margin-top: 20px;
+        width: 100%;
+        height: 600px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        z-index: 999;
+        display: none;
+        overflow: hidden;
     }
-}
 
-        .chat-popup.active {
-            display: flex;
-            flex-direction: column;
+    /* Adjustments for smaller screens */
+    @@media (max-width: 480px) {
+        .chat-popup {
+            right: 10px;
+            width: calc(100% - 20px);
+            margin-top: 20px;
         }
+    }
+
+    .chat-popup.active {
+        display: flex;
+        flex-direction: column;
+    }
 
     .chat-header {
         padding: 15px;
@@ -66,7 +69,6 @@
         flex: 1;
         overflow-y: auto;
         padding: 15px;
-
         max-height: 400px; /* Set minimum height */
     }
 
@@ -75,13 +77,13 @@
         margin-bottom: 15px;
     }
 
-        .message.received {
-            margin-right: auto;
-        }
+    .message.received {
+        margin-right: auto;
+    }
 
-        .message.sent {
-            margin-left: auto;
-        }
+    .message.sent {
+        margin-left: auto;
+    }
 
     .message-content {
         padding: 10px 15px;
@@ -109,7 +111,6 @@
         border-radius: 50%;
     }
 
-
     /* Custom scrollbar */
     .chat-messages::-webkit-scrollbar {
         width: 6px;
@@ -124,32 +125,46 @@
         border-radius: 3px;
     }
 
-        .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 
-   /*  /* Update the JavaScript */
-  .chat-popup {
-     /*    background: #0A2850; */
-     background: white;
+    .chat-popup {
+        background: white;
         border-radius: 10px;
-    } 
+    }
 </style>
 
 <div class="container-fluid hero-section">
     <div class="hero-overlay">
         <div class="container-fluid">
             <div class="row align-items-center">
+                <!-- Left side: Hero content -->
                 <div class="col-md-6 text-white" id="discover">
                     <h1 class="display-4">Expert Care for Every Pipe in Your Home</h1>
                     <p class="lead">Efficient plumbing solutions delivered with seamless, professional service from start to finish.</p>
-                
-                    <button class ="btn btn-green btn-lg  rounded-0" id="chatButton" title="Chat with Technician">
-                        <i class="bi bi-chat-dots-fill" id="chatIcon"></i> Chat with us
-                    </button>
+                    @{
+                        // Serialize the Model (List<Message>) to JSON.
+                        var messagesJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
+                        if(messagesJson != null) {
+                            // Pass the JSON string into a data attribute
+                            <button class="btn btn-green btn-lg rounded-0" id="chatButton" title="Chat with Technician" 
+                                    data-messages='@Html.Raw(messagesJson)' 
+                                    
+                                    onclick="openChat('@User.Identity.Name', this)">
+                                <i class="bi bi-chat-dots-fill" id="chatIcon"></i> Chat with us
+                            </button>
+                        }
+                        else {
+                            <button class="btn btn-green btn-lg rounded-0" id="chatButton" title="Chat with Technician" onclick="openChat(null)">
+                                <i class="bi bi-chat-dots-fill" id="chatIcon"></i> Chat with us
+                            </button>
+                        }
+                    }
                 </div>
+                <!-- Right side: Booking Form and Chat Popup -->
                 <div class="col-md-6" id="bookingForm">
-                    <div class="form-section  rounded-0">
+                    <div class="form-section rounded-0">
                         <form asp-action="Booking" asp-controller="ContactUs" method="post">
                             <div class="mb-3 d-flex flex-wrap gap-3">
                                 <div class="flex-grow-1">
@@ -164,11 +179,11 @@
                             <div class="mb-3 d-flex flex-wrap gap-3">
                                 <div class="flex-grow-1">
                                     <label for="City" class="form-label">City</label>
-                                    <input required type="City" name="City" class="form-control rounded-0" id="city" placeholder="City">
+                                    <input required type="text" name="City" class="form-control rounded-0" id="city" placeholder="City">
                                 </div>
                                 <div class="flex-grow-1">
                                     <label for="address" class="form-label">Address</label>
-                                    <input required type="address" name="Address" class="form-control rounded-0" id="address" placeholder="Address">
+                                    <input required type="text" name="Address" class="form-control rounded-0" id="address" placeholder="Address">
                                 </div>
                             </div>
                             <div class="mb-3 d-flex flex-wrap gap-3">
@@ -178,8 +193,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <label for="time" class="form-label">Time</label>
-                                    <input required
-                                           type="time" name="Time" class="form-control rounded-0" id="time">
+                                    <input required type="time" name="Time" class="form-control rounded-0" id="time">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -192,69 +206,70 @@
                             </div>
                             <button type="submit" id="sendBookingBtn" class="btn btn-green w-100 rounded-0" disabled>Book Now</button>
                         </form>
-
                     </div>
-       
                     
+                    <!-- Chat Popup -->
                     <div class="chat-popup" id="chatPopup">
                         <div class="chat-header">
                             <div class="d-flex align-items-center">
                                 <img src="~/images/bot.jpg" class="chat-avatar me-3" alt="Technician">
                                 <div>
-                                    <h6 class="mb-0 text-black" >Technical Support</h6>
+                                    <h6 class="mb-0 text-black">Technical Support</h6>
                                     <small class="text-muted text-black">Online</small>
                                 </div>
                             </div>
                         </div>
-
-                            <div class="chat-messages" >
+                        <div class="chat-messages">
                             <div id="chatMessages">
-                            <div class="message received">
-                                <div class="message-content text-black">
-                                    <p class="mb-0">Hello! How can I assist you?</p>
-                                </div>
+                                <div class="message received">
+                                    <div class="message-content text-black">
+                                        <p class="mb-0">Hello! How can I assist you?</p>
+                                    </div>
                                     <small class="text-muted">@System.TimeOnly.FromDateTime(DateTime.Now).ToString("hh:mm tt")</small>
                                 </div>
-
-                             
                             </div>
-                            
-
+                        </div>
                         <div class="chat-input">
                             <div class="input-group">
-                                    <input type="text" class="form-control" id="messageInput" placeholder="Type your message...">
-                                    <button class="btn btn-success" id="sendMessageFromClient">Send</button>
+                                <input type="text" class="form-control" id="messageInput" placeholder="Type your message...">
+                                <button class="btn btn-success" id="sendMessageFromClient">Send</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> <!-- End Booking Form Column -->
             </div>
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 <script>
 
-        var connection = new signalR.HubConnectionBuilder()
-            .withUrl("/chatHub") // Use correct backend port
-            .build();
+    var connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub")
+        .build();
 
-        connection.start().then(function () {
-            console.error("Connection started");
-        }).catch(function (err) {
-            console.error("Connection failed:", err.toString());
-        });
+    connection.start().then(function () {
+        console.error("Connection started");
+    }).catch(function (err) {
+        console.error("Connection failed:", err.toString());
+    });
 
-    document.getElementById('chatButton').addEventListener('click', function () {
+    let email = "";
+    
+
+    function openChat(userName, element) {
+        email = userName;
         const popup = document.getElementById('chatPopup');
         const formSection = document.querySelector('.form-section');
         const chatbtn = document.getElementById('chatButton');
 
-            connection.invoke("SetConnection").catch(function (err) {
-                console.error("Failed to set connection:", err.toString());
-            });
+        // Set the connection (if not already set)
+        connection.invoke("SetConnection").catch(function (err) {
+            console.error("Failed to set connection:", err.toString());
+        });
 
+        // Toggle display of the chat popup vs. booking form.
         if (popup.style.display === "none" || popup.style.display === "") {
             formSection.style.display = "none";
             popup.style.display = "block";
@@ -263,77 +278,86 @@
             formSection.style.display = "block";
             popup.style.display = "none";
             chatbtn.textContent = "Chat with us";
+        }
 
+        // Retrieve the JSON messages from the data attribute and parse them.
+        var messagesData = element.getAttribute('data-messages');
+        var messages = JSON.parse(messagesData);
+
+        // If messages is an array, iterate over each message object.
+        if (Array.isArray(messages)) {
+            messages.forEach(messageObj => {
+                // Check that MessagesText exists and is an array.
+                if (messageObj && messageObj.MessagesText && Array.isArray(messageObj.MessagesText)) {
+                    messageObj.MessagesText.forEach(text => {
+                        // Display as received if the message was sent by the client (i.e. if ReceiverEmail equals admin's email).
+                        if (messageObj.ReceiverEmail === "anas@admin.com") {
+                            sendMessageByMe(text);
+                        } else {
+                            receiveMessageOfOther(text);
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    // Listen for the client's Send button click.
+    document.getElementById("sendMessageFromClient").addEventListener("click", function () {
+        let messageInput = document.getElementById("messageInput");
+        let messageText = messageInput.value.trim();
+
+        if (messageText !== "") {
+            connection.invoke("SendMessageByUser", messageText).catch(function (err) {
+                console.error("Failed to send message:", err.toString());
+            });
+            messageInput.value = ""; // Clear input after sending.
+            console.log("Message sent: ", messageText);
         }
     });
 
+    // Function to add a new message to the chat.
+    function addMessage(text, type) {
+        let chatMessages = document.getElementById("chatMessages");
 
+        let messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", type);
 
-        //document.getElementById("sendBookingBtn").disabled = true;
-
-        // receive message
-        document.getElementById("sendMessageFromClient").addEventListener("click", function () {
-            let messageInput = document.getElementById("messageInput");
-            let messageText = messageInput.value.trim();
-
-            if (messageText !== "") {
-                connection.invoke("SendMessageByUser", messageText).catch(function (err) {
-                           console.error("Failed to send message:", err.toString());
-                });
-                messageInput.value = ""; // Clear input
-                console.log("Message sent: ", messageText); // Debugging
-            }
-        });
-
-        function addMessage(text, type) {
-            let chatMessages = document.getElementById("chatMessages");
-
-            let messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", type);
-
-            let contentDiv = document.createElement("div");
-            contentDiv.classList.add("message-content");
-            if (type === "received") {
-                contentDiv.classList.add("text-black");
-            }
-
-            let p = document.createElement("p");
-            p.classList.add("mb-0");
-            p.textContent = text;
-
-            let timeStamp = document.createElement("small");
-            timeStamp.classList.add("text-muted");
-            timeStamp.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-            contentDiv.appendChild(p);
-            messageDiv.appendChild(contentDiv);
-            messageDiv.appendChild(timeStamp);
-            chatMessages.appendChild(messageDiv);
-
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        let contentDiv = document.createElement("div");
+        contentDiv.classList.add("message-content");
+        if (type === "received") {
+            contentDiv.classList.add("text-black");
         }
 
-        function receiveMessage(text) {
-            addMessage(text, "received");
-        }
-        function sendMessage(text) {
-            addMessage(text, "sent");
-        }
+        let p = document.createElement("p");
+        p.classList.add("mb-0");
+        p.textContent = text;
 
-        connection.on("ReceiveMessage", function (message) {
-            sendMessage(message);
-        });
+        let timeStamp = document.createElement("small");
+        timeStamp.classList.add("text-muted");
+        timeStamp.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
+        contentDiv.appendChild(p);
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(timeStamp);
+        chatMessages.appendChild(messageDiv);
+
+        // Auto-scroll to the bottom.
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function receiveMessageOfOther(text) {
+        addMessage(text, "received");
+    }
+    function sendMessageByMe(text) {
+        addMessage(text, "sent");
+    }
+
+    // Listen for messages from SignalR.
+    connection.on("ReceiveMessage", function (message) {
+        receiveMessageOfOther(message);
+    });
+    connection.on("MySentMessage", function (message) {
+        sendMessageByMe(message);
+    });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-

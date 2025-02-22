@@ -1,9 +1,11 @@
 ﻿using HouseRepairApp.Data;
+using HouseRepairApp.Hubs;
 using HouseRepairApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Concurrent;
 
 namespace HouseRepairApp.Controllers
 {
@@ -13,6 +15,7 @@ namespace HouseRepairApp.Controllers
 		private readonly ApplicationDbContext _context;
         private readonly SignInManager<MyUser> _signInManager;
         private readonly UserManager<MyUser> _userManager;
+		private readonly ChatHub _chatHub;
         public AdminController(IWebHostEnvironment env, ApplicationDbContext context, SignInManager<MyUser> signInManager, UserManager<MyUser> userManager)
         {
             _context = context;
@@ -129,7 +132,8 @@ namespace HouseRepairApp.Controllers
 
 		public IActionResult ChatWithCustomer()
 		{
-			return View();
-		}
+			
+				return View(MessageDictionary.Messagedictionary);
+        }
     }
 }

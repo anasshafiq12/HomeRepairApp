@@ -1,6 +1,8 @@
 ﻿using HouseRepairApp.Data;
 using HouseRepairApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Concurrent;
+using System.Security.Claims;
 
 namespace HouseRepairApp.Controllers
 {
@@ -19,7 +21,16 @@ namespace HouseRepairApp.Controllers
 		{
 			if(!User.Identity.IsAuthenticated)
                 return Redirect("/Identity/Account/Login");
-            return View();
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+			ViewBag.Name = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if (!MessageDictionary.Messagedictionary.TryGetValue(email, out List<Message> messagesList))
+            {
+                messagesList = new List<Message>();
+            }
+
+            //  IEnumerable<Message> messages = messagesList.Value ?? new IEnumerable<Message>();
+
+            return View(messagesList);
 		}
 		public IActionResult Chat()
 		{
